@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "14950491034",
+    "project_id": "github-android-93d32",
+    "storage_bucket": "github-android-93d32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14950491034:android:64dcda945e09d371295023",
+        "android_client_info": {
+          "package_name": "com.github.petkovicdanilo.ghviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14950491034-8b05abfbf9d2qsu6vukuaei8k4f66rd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4BC7tpkyFubXpUn4N0pf44RhpuaAZk1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14950491034-8b05abfbf9d2qsu6vukuaei8k4f66rd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
