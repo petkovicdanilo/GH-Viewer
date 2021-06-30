@@ -1,8 +1,7 @@
-package com.github.petkovicdanilo.ghviewer;
+package com.github.petkovicdanilo.ghviewer.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 

@@ -1,4 +1,4 @@
-package com.github.petkovicdanilo.ghviewer;
+package com.github.petkovicdanilo.ghviewer.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,25 +8,17 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.petkovicdanilo.ghviewer.R;
 import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
-import com.github.petkovicdanilo.ghviewer.api.GitHubService;
-import com.github.petkovicdanilo.ghviewer.api.dto.EmailDto;
 import com.github.petkovicdanilo.ghviewer.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
