@@ -1,12 +1,24 @@
-package com.github.petkovicdanilo.ghviewer;
+package com.github.petkovicdanilo.ghviewer.fragment;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
+import com.github.petkovicdanilo.ghviewer.api.GitHubService;
+import com.github.petkovicdanilo.ghviewer.api.dto.EmailDto;
+import com.github.petkovicdanilo.ghviewer.databinding.FragmentHomeBinding;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +26,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    private static String TAG = "HOME_FR";
+
+    private FragmentHomeBinding binding;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,7 +74,34 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        binding.btnTest.setOnClickListener(this::onTestButtonClick);
+
+        return view;
+    }
+
+    public void onTestButtonClick(View view) {
+        GitHubService service = ApiHelper.getInstance().getGitHubService();
+
+        Call<List<EmailDto>> call = service.getEmails();
+        call.enqueue(new Callback<List<EmailDto>>() {
+            @Override
+            public void onResponse(Call<List<EmailDto>> call, Response<List<EmailDto>> response) {
+                Log.i(TAG, response.isSuccessful() ? "true" : "false");
+                Log.i(TAG, response.message());
+                if (response.body() == null || response.body().size() == 0) {
+                    Log.i(TAG, "empty list");
+                } else {
+                    Log.i(TAG, response.body().get(0).getEmail());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EmailDto>> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
     }
 }

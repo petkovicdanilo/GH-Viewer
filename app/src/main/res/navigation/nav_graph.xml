@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.github.petkovicdanilo.ghviewer.HomeFragment"
+        android:name="com.github.petkovicdanilo.ghviewer.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/repositoriesFragment"
-        android:name="com.github.petkovicdanilo.ghviewer.RepositoriesFragment"
+        android:name="com.github.petkovicdanilo.ghviewer.fragment.RepositoriesFragment"
         android:label="fragment_repositories"
         tools:layout="@layout/fragment_repositories" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.github.petkovicdanilo.ghviewer.SearchFragment"
+        android:name="com.github.petkovicdanilo.ghviewer.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>
