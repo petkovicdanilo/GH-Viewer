@@ -11,9 +11,15 @@ import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
 import com.github.petkovicdanilo.ghviewer.api.GitHubService;
+import com.github.petkovicdanilo.ghviewer.api.dto.ActivityDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.EmailDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GithubAuthProvider;
+import com.google.firebase.auth.UserInfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -85,22 +91,41 @@ public class HomeFragment extends Fragment {
     public void onTestButtonClick(View view) {
         GitHubService service = ApiHelper.getInstance().getGitHubService();
 
-        Call<List<EmailDto>> call = service.getEmails();
-        call.enqueue(new Callback<List<EmailDto>>() {
+//        Call<List<EmailDto>> call = service.getEmails();
+//        call.enqueue(new Callback<List<EmailDto>>() {
+//            @Override
+//            public void onResponse(Call<List<EmailDto>> call, Response<List<EmailDto>> response) {
+//                Log.i(TAG, response.isSuccessful() ? "true" : "false");
+//                Log.i(TAG, response.message());
+//                if (response.body() == null || response.body().size() == 0) {
+//                    Log.i(TAG, "empty list");
+//                } else {
+//                    Log.i(TAG, response.body().get(0).getEmail());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<EmailDto>> call, Throwable t) {
+//                Log.e(TAG, t.getMessage());
+//            }
+//        });
+//    }
+
+
+        String username = ApiHelper.getInstance().getCurrentUser().getLogin();
+
+        Call<List<ActivityDto>> call = service.getActivities(username, 1, 10);
+        call.enqueue(new Callback<List<ActivityDto>>() {
             @Override
-            public void onResponse(Call<List<EmailDto>> call, Response<List<EmailDto>> response) {
-                Log.i(TAG, response.isSuccessful() ? "true" : "false");
-                Log.i(TAG, response.message());
-                if (response.body() == null || response.body().size() == 0) {
-                    Log.i(TAG, "empty list");
-                } else {
-                    Log.i(TAG, response.body().get(0).getEmail());
+            public void onResponse(Call<List<ActivityDto>> call,
+                                   Response<List<ActivityDto>> response) {
+                if (response.isSuccessful()) {
                 }
             }
 
             @Override
-            public void onFailure(Call<List<EmailDto>> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
+            public void onFailure(Call<List<ActivityDto>> call, Throwable t) {
+
             }
         });
     }

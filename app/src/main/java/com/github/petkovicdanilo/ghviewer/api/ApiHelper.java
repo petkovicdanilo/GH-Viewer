@@ -1,5 +1,8 @@
 package com.github.petkovicdanilo.ghviewer.api;
 
+import android.util.Log;
+
+import com.github.petkovicdanilo.ghviewer.api.dto.UserDto;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,14 +11,19 @@ import lombok.Getter;
 import lombok.Setter;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiHelper {
     private static String BASE_URL = "https://api.github.com";
 
-    @Setter()
     private volatile String token;
+
+    @Getter
+    private volatile UserDto currentUser;
 
     private static volatile ApiHelper INSTANCE = null;
 
@@ -59,5 +67,26 @@ public class ApiHelper {
             }
         }
         return INSTANCE;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+
+        Log.i("TAG", token);
+
+        Call<UserDto> call = gitHubService.getUser();
+        call.enqueue(new Callback<UserDto>() {
+            @Override
+            public void onResponse(Call<UserDto> call, Response<UserDto> response) {
+                if(response.isSuccessful()) {
+                    ApiHelper.this.currentUser = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDto> call, Throwable t) {
+
+            }
+        });
     }
 }
