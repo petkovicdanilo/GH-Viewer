@@ -39,5 +39,9 @@ public interface GitHubService {
     Call<RepositorySearchResultDto> searchRepositories(@Query("q") String query,
                                                        @Query("page") int page,
                                                        @Query("per_page") int perPage);
+
+    @GET("user/repos")
+    Call<List<RepositoryDto>> getMyRepositories(@Query("page") int page,
+                                                @Query("per_page") int perPage);
 }
 

@@ -3,64 +3,64 @@ package com.github.petkovicdanilo.ghviewer.view.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.R;
+import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoriesBinding;
+import com.github.petkovicdanilo.ghviewer.view.adapter.RepositoriesAdapter;
+import com.github.petkovicdanilo.ghviewer.viewmodel.MyRepositoriesViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RepositoriesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RepositoriesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "RepositoriesFragment";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private MyRepositoriesViewModel viewModel;
+    private RepositoriesAdapter adapter;
+
+    private FragmentRepositoriesBinding binding;
 
     public RepositoriesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RepositoriesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RepositoriesFragment newInstance(String param1, String param2) {
+    public static RepositoriesFragment newInstance() {
         RepositoriesFragment fragment = new RepositoriesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_repositories, container, false);
+        binding = FragmentRepositoriesBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        viewModel = new ViewModelProvider(requireActivity()).get(MyRepositoriesViewModel.class);
+        viewModel.getMyRepositories().observe(getViewLifecycleOwner(),
+                activities -> updateAdapter());
+        updateAdapter();
+
+        if (viewModel.getNextPage() == 1) {
+            viewModel.loadNextPage();
+        }
+
+        binding.btnMyRepositoriesLoadMore.setOnClickListener(v -> viewModel.loadNextPage());
+
+        return view;
+    }
+
+    private void updateAdapter() {
+        adapter = new RepositoriesAdapter(viewModel.getMyRepositories().getValue());
+        binding.myRepositories.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.myRepositories.setAdapter(adapter);
     }
 }
