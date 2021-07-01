@@ -30,15 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-
-        if (savedInstanceState == null) {
-            String token = intent.getStringExtra("token");
-            ApiHelper.getInstance().setToken(token);
-        } else {
-
-        }
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 

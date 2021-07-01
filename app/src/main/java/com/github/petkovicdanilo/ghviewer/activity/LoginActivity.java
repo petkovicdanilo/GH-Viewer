@@ -9,8 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
 import com.github.petkovicdanilo.ghviewer.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GithubAuthProvider;
 import com.google.firebase.auth.OAuthCredential;
 import com.google.firebase.auth.OAuthProvider;
 
@@ -36,15 +38,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLoginClick(View v) {
-        OAuthProvider.Builder provider = OAuthProvider.newBuilder("github.com");
+        OAuthProvider.Builder provider = OAuthProvider.newBuilder(GithubAuthProvider.PROVIDER_ID);
         provider.setScopes(Arrays.asList("repo"));
 
         FirebaseAuth.getInstance()
                 .startActivityForSignInWithProvider(this, provider.build())
                 .addOnSuccessListener(authResult -> {
                     OAuthCredential credential = (OAuthCredential) authResult.getCredential();
+                    ApiHelper.getInstance().setToken(credential.getAccessToken());
+
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("token", credential.getAccessToken());
                     startActivity(intent);
                 })
                 .addOnFailureListener(e -> {
