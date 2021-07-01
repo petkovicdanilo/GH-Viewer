@@ -51,6 +51,7 @@ public class ActivitiesViewModel extends ViewModel {
 
                 if(activities.size() == 0) {
                     done = true;
+                    return;
                 }
 
                 List<ActivityDto> currentActivities =

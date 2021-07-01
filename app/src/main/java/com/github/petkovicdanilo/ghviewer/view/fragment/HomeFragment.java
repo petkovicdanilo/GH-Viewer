@@ -16,7 +16,7 @@ import com.github.petkovicdanilo.ghviewer.viewmodel.ActivitiesViewModel;
 
 public class HomeFragment extends Fragment {
 
-    private static String TAG = "HOME_FR";
+    private static final String TAG = "HomeFragment";
 
     private ActivitiesViewModel viewModel;
     private ActivitiesAdapter adapter;
@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
     }

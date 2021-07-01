@@ -1,5 +1,7 @@
 package com.github.petkovicdanilo.ghviewer.api.dto;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.Getter;
 
 @Getter()
@@ -13,4 +15,13 @@ public class RepositoryDto {
     private String fullName;
 
     private UserDto owner;
+
+    private RepositoryVisibility visibility;
+
+    public enum RepositoryVisibility {
+        @SerializedName("public")
+        PUBLIC,
+        @SerializedName("private")
+        PRIVATE
+    }
 }

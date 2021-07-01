@@ -4,6 +4,7 @@ import com.github.petkovicdanilo.ghviewer.api.dto.ActivityDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.CreateRepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.EmailDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.RepositorySearchResultDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.UserDto;
 
 import java.util.List;
@@ -33,5 +34,10 @@ public interface GitHubService {
 
     @GET("user")
     Call<UserDto> getUser();
+
+    @GET("search/repositories")
+    Call<RepositorySearchResultDto> searchRepositories(@Query("q") String query,
+                                                       @Query("page") int page,
+                                                       @Query("per_page") int perPage);
 }
 
