@@ -40,6 +40,7 @@ public class ApiHelper {
                 .addInterceptor(chain -> {
                     Request newRequest = chain.request().newBuilder()
                             .addHeader("Authorization", "token " + this.token)
+                            .addHeader("Accept", "application/vnd.github.v3+json")
                             .build();
                     return chain.proceed(newRequest);
                 })
