@@ -69,9 +69,7 @@ public class SearchResultsViewModel extends ViewModel {
         });
     }
 
-    public void search(String name) {
-        String query = name + " in:name";
-
+    public void search(String query) {
         nextPage = 1;
         usedQuery = query;
         done = false;

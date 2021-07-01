@@ -54,8 +54,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void search() {
-        String name = binding.txtSearch.getText().toString();
-        viewModel.search(name);
+        String query = binding.txtSearch.getText().toString();
+        viewModel.search(query);
     }
 
     private void updateAdapter() {
