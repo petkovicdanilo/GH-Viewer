@@ -75,6 +75,7 @@ public class SearchResultsViewModel extends ViewModel {
         nextPage = 1;
         usedQuery = query;
         done = false;
+        searchResults.setValue(new ArrayList<>());
 
         loadNextPage();
     }
