@@ -1,4 +1,4 @@
-package com.github.petkovicdanilo.ghviewer.fragment;
+package com.github.petkovicdanilo.ghviewer.view.fragment;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.github.petkovicdanilo.ghviewer.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RepositoriesFragment#newInstance} factory method to
+ * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RepositoriesFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class RepositoriesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public RepositoriesFragment() {
+    public SearchFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class RepositoriesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RepositoriesFragment.
+     * @return A new instance of fragment SearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RepositoriesFragment newInstance(String param1, String param2) {
-        RepositoriesFragment fragment = new RepositoriesFragment();
+    public static SearchFragment newInstance(String param1, String param2) {
+        SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class RepositoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_repositories, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 }

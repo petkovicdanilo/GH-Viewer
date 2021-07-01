@@ -1,4 +1,4 @@
-package com.github.petkovicdanilo.ghviewer.activity;
+package com.github.petkovicdanilo.ghviewer.view.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.petkovicdanilo.ghviewer.R;
-import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
 import com.github.petkovicdanilo.ghviewer.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

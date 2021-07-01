@@ -30,7 +30,7 @@ public interface GitHubService {
     @GET("users/{username}/received_events")
     Call<List<ActivityDto>> getActivities(@Path("username") String username,
                                           @Query("page") int page, @Query("per_page") int perPage);
-    
+
     @GET("user")
     Call<UserDto> getUser();
 }

@@ -20,14 +20,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiHelper {
     private static String BASE_URL = "https://api.github.com";
 
+    @Setter
     private volatile String token;
 
-    @Getter
+    @Setter @Getter
     private volatile UserDto currentUser;
 
     private static volatile ApiHelper INSTANCE = null;
 
-    @Getter()
+    @Getter
     private GitHubService gitHubService;
 
     private ApiHelper() {
@@ -67,26 +68,5 @@ public class ApiHelper {
             }
         }
         return INSTANCE;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-
-        Log.i("TAG", token);
-
-        Call<UserDto> call = gitHubService.getUser();
-        call.enqueue(new Callback<UserDto>() {
-            @Override
-            public void onResponse(Call<UserDto> call, Response<UserDto> response) {
-                if(response.isSuccessful()) {
-                    ApiHelper.this.currentUser = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserDto> call, Throwable t) {
-
-            }
-        });
     }
 }

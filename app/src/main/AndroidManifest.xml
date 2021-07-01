@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GHViewer">
 
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".view.activity.MainActivity">
 
         </activity>
     </application>

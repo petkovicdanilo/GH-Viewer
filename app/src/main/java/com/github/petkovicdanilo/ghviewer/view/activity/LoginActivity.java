@@ -1,4 +1,4 @@
-package com.github.petkovicdanilo.ghviewer.activity;
+package com.github.petkovicdanilo.ghviewer.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
+import com.github.petkovicdanilo.ghviewer.api.GitHubService;
+import com.github.petkovicdanilo.ghviewer.api.dto.UserDto;
 import com.github.petkovicdanilo.ghviewer.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GithubAuthProvider;
@@ -18,7 +20,11 @@ import com.google.firebase.auth.OAuthProvider;
 
 import java.util.Arrays;
 
-public class LoginActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class LoginActivity extends AppCompatActivity implements Callback<UserDto> {
 
     private ActivityLoginBinding binding;
 
@@ -44,14 +50,39 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth.getInstance()
                 .startActivityForSignInWithProvider(this, provider.build())
                 .addOnSuccessListener(authResult -> {
-                    OAuthCredential credential = (OAuthCredential) authResult.getCredential();
-                    ApiHelper.getInstance().setToken(credential.getAccessToken());
+                    ApiHelper apiHelper = ApiHelper.getInstance();
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    OAuthCredential credential = (OAuthCredential) authResult.getCredential();
+                    apiHelper.setToken(credential.getAccessToken());
+
+                    GitHubService gitHubService = apiHelper.getGitHubService();
+                    Call<UserDto> call = gitHubService.getUser();
+                    call.enqueue(this);
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Log in was not successful", Toast.LENGTH_LONG);
+                    showFailureToast();
                 });
+    }
+
+    @Override
+    public void onResponse(Call<UserDto> call, Response<UserDto> response) {
+        if (response.isSuccessful()) {
+            ApiHelper.getInstance().setCurrentUser(response.body());
+
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+        else {
+            showFailureToast();
+        }
+    }
+
+    @Override
+    public void onFailure(Call<UserDto> call, Throwable t) {
+        showFailureToast();
+    }
+
+    private void showFailureToast() {
+        Toast.makeText(this, "Log in was not successful", Toast.LENGTH_LONG).show();
     }
 }
