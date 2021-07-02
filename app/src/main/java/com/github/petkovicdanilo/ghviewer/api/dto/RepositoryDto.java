@@ -19,6 +19,8 @@ public class RepositoryDto {
 
     private RepositoryVisibility visibility;
 
+    private String defaultBranch;
+
     public enum RepositoryVisibility {
         @SerializedName("public")
         PUBLIC,

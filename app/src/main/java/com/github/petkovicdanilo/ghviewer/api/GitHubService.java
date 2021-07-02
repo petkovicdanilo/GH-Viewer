@@ -2,6 +2,10 @@ package com.github.petkovicdanilo.ghviewer.api;
 
 import com.github.petkovicdanilo.ghviewer.api.dto.EventDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.CreateRepositoryDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.git.BlobDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.git.BranchDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.git.BranchSimpleDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositorySearchResultDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.UserDto;
@@ -34,5 +38,25 @@ public interface GitHubService {
     @GET("user/repos")
     Call<List<RepositoryDto>> getMyRepositories(@Query("page") int page,
                                                 @Query("per_page") int perPage);
+
+    @GET("repos/{owner}/{repo}")
+    Call<RepositoryDto> getRepository(@Path("owner") String owner,
+                                      @Path("repo") String repositoryName);
+
+    @GET("repos/{owner}/{repo}/git/trees/{sha}")
+    Call<TreeDto> getTree(@Path("owner") String owner,
+                          @Path("repo") String repositoryName, @Path("sha") String sha);
+
+    @GET("repos/{owner}/{repo}/git/branches/{sha}")
+    Call<BranchDto> getBranch(@Path("owner") String owner,
+                              @Path("repo") String repositoryName, @Path("sha") String sha);
+
+    @GET("repos/{owner}/{repo}/git/branches")
+    Call<List<BranchSimpleDto>> getBranches(@Path("owner") String owner,
+                                            @Path("repo") String repositoryName);
+
+    @GET("repos/{owner}/{repo}/git/blobs/{sha}")
+    Call<BlobDto> getBlob(@Path("owner") String owner,
+                            @Path("repo") String repositoryName, @Path("sha") String sha);
 }
 
