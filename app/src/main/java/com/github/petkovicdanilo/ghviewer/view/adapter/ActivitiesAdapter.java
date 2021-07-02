@@ -17,6 +17,7 @@ import com.github.petkovicdanilo.ghviewer.api.dto.ActivityDto;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.ViewHolder> {
 
@@ -25,13 +26,26 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
 
     private Fragment fragment;
 
+    private OnActivityListener onActivityListener;
+
+    public ActivitiesAdapter(List<ActivityDto> activities, Fragment fragment,
+                             OnActivityListener onActivityListener) {
+        this.activities = activities;
+        this.fragment = fragment;
+        this.onActivityListener = onActivityListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activities_row_item, parent, false);
 
-        return new ViewHolder(view);
+        view.setOnClickListener(v -> {
+
+        });
+
+        return new ViewHolder(view, onActivityListener);
     }
 
     @Override
@@ -53,12 +67,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
         return activities.size();
     }
 
-    public ActivitiesAdapter(List<ActivityDto> activities, Fragment fragment) {
-        this.activities = activities;
-        this.fragment = fragment;
-    }
-
-    public static class ViewHolder extends  RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Getter
         private final TextView textView;
@@ -66,11 +75,26 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
         @Getter
         private final ImageView profileImage;
 
-        public ViewHolder(View view) {
+        private OnActivityListener listener;
+
+        public ViewHolder(View view, OnActivityListener listener) {
             super(view);
 
             textView = view.findViewById(R.id.activity_row_item);
             profileImage = view.findViewById(R.id.activity_profile_image);
+
+            this.listener = listener;
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.onActivityClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnActivityListener {
+        void onActivityClick(int position);
     }
 }
