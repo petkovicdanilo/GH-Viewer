@@ -2,6 +2,7 @@ package com.github.petkovicdanilo.ghviewer.view.fragment;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,10 +42,15 @@ public class RepositoriesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentRepositoriesBinding.inflate(inflater, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repositories, container,
+                false);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
         View view = binding.getRoot();
 
         viewModel = new ViewModelProvider(requireActivity()).get(MyRepositoriesViewModel.class);
+
+        binding.setViewModel(viewModel);
+
         viewModel.getMyRepositories().observe(getViewLifecycleOwner(),
                 activities -> updateAdapter());
         updateAdapter();
@@ -52,8 +58,6 @@ public class RepositoriesFragment extends Fragment {
         if (viewModel.getNextPage() == 1) {
             viewModel.loadNextPage();
         }
-
-        binding.btnMyRepositoriesLoadMore.setOnClickListener(v -> viewModel.loadNextPage());
 
         return view;
     }

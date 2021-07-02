@@ -2,6 +2,7 @@ package com.github.petkovicdanilo.ghviewer.viewmodel;
 
 import android.util.Log;
 
+import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -27,14 +28,15 @@ public class ActivitiesViewModel extends ViewModel {
     private int nextPage = 1;
     private final int perPage = 10;
 
-    private boolean done = false;
+    @Getter
+    private MutableLiveData<Boolean> done = new MutableLiveData<>(false);
 
     private final GitHubService gitHubService = ApiHelper.getInstance().getGitHubService();
 
     private static final String TAG = "ActivitiesViewModel";
 
     public void loadNextPage() {
-        if(done) {
+        if(done.getValue()) {
             Log.i(TAG, "Nothing more to load...");
             return;
         }
@@ -49,15 +51,14 @@ public class ActivitiesViewModel extends ViewModel {
                                    Response<List<ActivityDto>> response) {
                 List<ActivityDto> activities = response.body();
 
-                if(activities.size() == 0) {
-                    done = true;
-                    return;
+                if(activities.size() < perPage) {
+                    done.postValue(true);
                 }
 
                 List<ActivityDto> currentActivities =
                         ActivitiesViewModel.this.activities.getValue();
                 currentActivities.addAll(activities);
-                ActivitiesViewModel.this.activities.setValue(currentActivities);
+                ActivitiesViewModel.this.activities.postValue(currentActivities);
             }
 
             @Override

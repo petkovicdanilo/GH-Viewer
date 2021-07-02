@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:isScrollContainer="true"
-    app:layout_constraintTop_toTopOf="parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.HomeFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.github.petkovicdanilo.ghviewer.viewmodel.ActivitiesViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:id="@+id/activities_list"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Load more"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/btn_activities_list_load_more"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activities_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" />
 
-    </LinearLayout>
-
-
-</androidx.core.widget.NestedScrollView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_activities_list_load_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:enabled="@{!viewModel.done}"
+                android:onClick="@{() -> viewModel.loadNextPage()}"
+                android:text="@string/load_more" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

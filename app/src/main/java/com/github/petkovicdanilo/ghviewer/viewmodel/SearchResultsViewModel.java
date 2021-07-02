@@ -24,25 +24,27 @@ public class SearchResultsViewModel extends ViewModel {
     private final MutableLiveData<List<RepositoryDto>> searchResults =
             new MutableLiveData<>(new ArrayList<>());
 
-    private String usedQuery;
+    @Getter
+    private MutableLiveData<String> query = new MutableLiveData<>("");
 
     @Getter
     private int nextPage = 1;
     private final int perPage = 10;
 
-    private boolean done = false;
+    @Getter
+    private MutableLiveData<Boolean> done = new MutableLiveData<>(false);
 
     private final GitHubService gitHubService = ApiHelper.getInstance().getGitHubService();
 
     private static final String TAG = "SearchResultsViewModel";
 
     public void loadNextPage() {
-        if (done) {
+        if (done.getValue()) {
             Log.i(TAG, "Nothing more to load...");
             return;
         }
 
-        Call<RepositorySearchResultDto> call = gitHubService.searchRepositories(usedQuery,
+        Call<RepositorySearchResultDto> call = gitHubService.searchRepositories(query.getValue(),
                 nextPage, perPage);
         nextPage++;
         call.enqueue(new Callback<RepositorySearchResultDto>() {
@@ -51,14 +53,13 @@ public class SearchResultsViewModel extends ViewModel {
                                    Response<RepositorySearchResultDto> response) {
                 List<RepositoryDto> repositories = response.body().getItems();
 
-                if (repositories.size() == 0) {
-                    done = true;
-                    return;
+                if (repositories.size() < perPage) {
+                    done.postValue(true);
                 }
 
                 List<RepositoryDto> currentRepositories = searchResults.getValue();
                 currentRepositories.addAll(repositories);
-                searchResults.setValue(currentRepositories);
+                searchResults.postValue(currentRepositories);
             }
 
             @Override
@@ -69,10 +70,9 @@ public class SearchResultsViewModel extends ViewModel {
         });
     }
 
-    public void search(String query) {
+    public void search() {
         nextPage = 1;
-        usedQuery = query;
-        done = false;
+        done.setValue(false);
         searchResults.setValue(new ArrayList<>());
 
         loadNextPage();

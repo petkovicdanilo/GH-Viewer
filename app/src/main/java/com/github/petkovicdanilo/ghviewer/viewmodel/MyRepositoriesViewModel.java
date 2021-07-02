@@ -28,14 +28,15 @@ public class MyRepositoriesViewModel extends ViewModel {
     private int nextPage = 1;
     private final int perPage = 10;
 
-    private boolean done = false;
+    @Getter
+    private MutableLiveData<Boolean> done = new MutableLiveData<>(false);
 
     private final GitHubService gitHubService = ApiHelper.getInstance().getGitHubService();
 
     private static final String TAG = "MyRepositoriesViewModel";
 
     public void loadNextPage() {
-        if (done) {
+        if (done.getValue()) {
             Log.i(TAG, "Nothing more to load...");
             return;
         }
@@ -49,14 +50,13 @@ public class MyRepositoriesViewModel extends ViewModel {
                                    Response<List<RepositoryDto>> response) {
                 List<RepositoryDto> newRepositories = response.body();
 
-                if (newRepositories.size() == 0) {
-                    done = true;
-                    return;
+                if (newRepositories.size() < perPage) {
+                    done.postValue(true);
                 }
 
                 List<RepositoryDto> currentRepositories = myRepositories.getValue();
                 currentRepositories.addAll(newRepositories);
-                myRepositories.setValue(currentRepositories);
+                myRepositories.postValue(currentRepositories);
             }
 
             @Override
@@ -65,5 +65,4 @@ public class MyRepositoriesViewModel extends ViewModel {
             }
         });
     }
-
 }
