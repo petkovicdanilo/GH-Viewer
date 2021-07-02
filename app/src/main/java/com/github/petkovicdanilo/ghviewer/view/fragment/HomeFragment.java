@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateAdapter() {
-        adapter = new ActivitiesAdapter(viewModel.getActivities().getValue());
+        adapter = new ActivitiesAdapter(viewModel.getActivities().getValue(), this);
         binding.activitiesList.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.activitiesList.setAdapter(adapter);
     }
