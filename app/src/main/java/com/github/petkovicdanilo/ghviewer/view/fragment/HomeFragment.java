@@ -14,17 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.R;
-import com.github.petkovicdanilo.ghviewer.api.dto.ActivityDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.EventDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentHomeBinding;
-import com.github.petkovicdanilo.ghviewer.view.adapter.ActivitiesAdapter;
-import com.github.petkovicdanilo.ghviewer.viewmodel.ActivitiesViewModel;
+import com.github.petkovicdanilo.ghviewer.view.adapter.EventsAdapter;
+import com.github.petkovicdanilo.ghviewer.viewmodel.EventsViewModel;
 
-public class HomeFragment extends Fragment implements ActivitiesAdapter.OnActivityListener {
+public class HomeFragment extends Fragment implements EventsAdapter.OnEventListener {
 
     private static final String TAG = "HomeFragment";
 
-    private ActivitiesViewModel viewModel;
-    private ActivitiesAdapter adapter;
+    private EventsViewModel viewModel;
+    private EventsAdapter adapter;
 
     private FragmentHomeBinding binding;
 
@@ -50,11 +50,11 @@ public class HomeFragment extends Fragment implements ActivitiesAdapter.OnActivi
         binding.setLifecycleOwner(getViewLifecycleOwner());
         View view = binding.getRoot();
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ActivitiesViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
 
         binding.setViewModel(viewModel);
 
-        viewModel.getActivities().observe(getViewLifecycleOwner(), activities -> updateAdapter());
+        viewModel.getEvents().observe(getViewLifecycleOwner(), events -> updateAdapter());
         updateAdapter();
 
         if (viewModel.getNextPage() == 1) {
@@ -65,19 +65,19 @@ public class HomeFragment extends Fragment implements ActivitiesAdapter.OnActivi
     }
 
     private void updateAdapter() {
-        adapter = new ActivitiesAdapter(viewModel.getActivities().getValue(), this, this);
-        binding.activitiesList.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.activitiesList.setAdapter(adapter);
+        adapter = new EventsAdapter(viewModel.getEvents().getValue(), this, this);
+        binding.eventsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.eventsList.setAdapter(adapter);
     }
 
     @Override
-    public void onActivityClick(int position) {
-        ActivityDto clickedActivity = viewModel.getActivities().getValue().get(position);
+    public void onEventClick(int position) {
+        EventDto clickedEvent = viewModel.getEvents().getValue().get(position);
 
-        Log.i(TAG, clickedActivity.getRepo().toString());
+        Log.i(TAG, clickedEvent.getRepo().toString());
 
         HomeFragmentDirections.HomeToRepositoryAction action =
-                HomeFragmentDirections.homeToRepositoryAction(clickedActivity.getRepo().getName());
+                HomeFragmentDirections.homeToRepositoryAction(clickedEvent.getRepo().getName());
         Navigation.findNavController(getView()).navigate(action);
     }
 }

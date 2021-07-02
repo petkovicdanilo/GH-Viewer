@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-public class ActivityDto {
+public class EventDto {
 
     private String id;
 

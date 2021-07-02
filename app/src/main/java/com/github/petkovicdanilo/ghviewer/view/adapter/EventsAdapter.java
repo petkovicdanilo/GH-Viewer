@@ -12,51 +12,46 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.github.petkovicdanilo.ghviewer.R;
-import com.github.petkovicdanilo.ghviewer.api.dto.ActivityDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.EventDto;
 
 import java.util.List;
 
 import lombok.Getter;
-import lombok.Setter;
 
-public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.ViewHolder> {
+public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
     @Getter
-    private List<ActivityDto> activities;
+    private List<EventDto> events;
 
     private Fragment fragment;
 
-    private OnActivityListener onActivityListener;
+    private OnEventListener onEventListener;
 
-    public ActivitiesAdapter(List<ActivityDto> activities, Fragment fragment,
-                             OnActivityListener onActivityListener) {
-        this.activities = activities;
+    public EventsAdapter(List<EventDto> events, Fragment fragment,
+                         OnEventListener onEventListener) {
+        this.events = events;
         this.fragment = fragment;
-        this.onActivityListener = onActivityListener;
+        this.onEventListener = onEventListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activities_row_item, parent, false);
+                .inflate(R.layout.event_item, parent, false);
 
-        view.setOnClickListener(v -> {
-
-        });
-
-        return new ViewHolder(view, onActivityListener);
+        return new ViewHolder(view, onEventListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ActivityDto activity = activities.get(position);
+        EventDto event = events.get(position);
 
-        holder.getTextView().setText(activity.getType().getValue());
+        holder.getTextView().setText(event.getType().getValue());
 
         ImageView profileImage = holder.getProfileImage();
         Glide.with(fragment)
-                .load(activity.getActor().getAvatarUrl())
+                .load(event.getActor().getAvatarUrl())
                 .circleCrop()
                 .fitCenter()
                 .into(profileImage);
@@ -64,7 +59,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return activities.size();
+        return events.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,13 +70,13 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
         @Getter
         private final ImageView profileImage;
 
-        private OnActivityListener listener;
+        private OnEventListener listener;
 
-        public ViewHolder(View view, OnActivityListener listener) {
+        public ViewHolder(View view, OnEventListener listener) {
             super(view);
 
-            textView = view.findViewById(R.id.activity_row_item);
-            profileImage = view.findViewById(R.id.activity_profile_image);
+            textView = view.findViewById(R.id.event_row_item);
+            profileImage = view.findViewById(R.id.event_profile_image);
 
             this.listener = listener;
 
@@ -90,11 +85,11 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            listener.onActivityClick(getAdapterPosition());
+            listener.onEventClick(getAdapterPosition());
         }
     }
 
-    public interface OnActivityListener {
-        void onActivityClick(int position);
+    public interface OnEventListener {
+        void onEventClick(int position);
     }
 }

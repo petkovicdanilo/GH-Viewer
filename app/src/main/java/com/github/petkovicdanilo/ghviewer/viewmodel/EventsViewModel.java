@@ -2,13 +2,12 @@ package com.github.petkovicdanilo.ghviewer.viewmodel;
 
 import android.util.Log;
 
-import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
 import com.github.petkovicdanilo.ghviewer.api.GitHubService;
-import com.github.petkovicdanilo.ghviewer.api.dto.ActivityDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.EventDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +17,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ActivitiesViewModel extends ViewModel {
+public class EventsViewModel extends ViewModel {
 
     @Getter
-    private final MutableLiveData<List<ActivityDto>> activities =
+    private final MutableLiveData<List<EventDto>> events =
             new MutableLiveData<>(new ArrayList<>());
 
     @Getter
@@ -33,7 +32,7 @@ public class ActivitiesViewModel extends ViewModel {
 
     private final GitHubService gitHubService = ApiHelper.getInstance().getGitHubService();
 
-    private static final String TAG = "ActivitiesViewModel";
+    private static final String TAG = "EventsViewModel";
 
     public void loadNextPage() {
         if(done.getValue()) {
@@ -42,28 +41,28 @@ public class ActivitiesViewModel extends ViewModel {
         }
 
         String username = ApiHelper.getInstance().getCurrentUser().getLogin();
-        Call<List<ActivityDto>> call = gitHubService.getActivities(username, nextPage, perPage);
+        Call<List<EventDto>> call = gitHubService.getEvents(username, nextPage, perPage);
         nextPage++;
 
-        call.enqueue(new Callback<List<ActivityDto>>() {
+        call.enqueue(new Callback<List<EventDto>>() {
             @Override
-            public void onResponse(Call<List<ActivityDto>> call,
-                                   Response<List<ActivityDto>> response) {
-                List<ActivityDto> activities = response.body();
+            public void onResponse(Call<List<EventDto>> call,
+                                   Response<List<EventDto>> response) {
+                List<EventDto> events = response.body();
 
-                if(activities.size() < perPage) {
+                if(events.size() < perPage) {
                     done.postValue(true);
                 }
 
-                List<ActivityDto> currentActivities =
-                        ActivitiesViewModel.this.activities.getValue();
-                currentActivities.addAll(activities);
-                ActivitiesViewModel.this.activities.postValue(currentActivities);
+                List<EventDto> currentEvents =
+                        EventsViewModel.this.events.getValue();
+                currentEvents.addAll(events);
+                EventsViewModel.this.events.postValue(currentEvents);
             }
 
             @Override
-            public void onFailure(Call<List<ActivityDto>> call, Throwable t) {
-                Log.e(TAG, "Failed to load activities");
+            public void onFailure(Call<List<EventDto>> call, Throwable t) {
+                Log.e(TAG, "Failed to load events");
             }
         });
     }

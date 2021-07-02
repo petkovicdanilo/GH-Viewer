@@ -1,6 +1,6 @@
 package com.github.petkovicdanilo.ghviewer.api;
 
-import com.github.petkovicdanilo.ghviewer.api.dto.ActivityDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.EventDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.CreateRepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositorySearchResultDto;
@@ -20,8 +20,8 @@ public interface GitHubService {
     Call<RepositoryDto> createRepo(@Body() CreateRepositoryDto createRepo);
 
     @GET("users/{username}/received_events")
-    Call<List<ActivityDto>> getActivities(@Path("username") String username,
-                                          @Query("page") int page, @Query("per_page") int perPage);
+    Call<List<EventDto>> getEvents(@Path("username") String username,
+                                   @Query("page") int page, @Query("per_page") int perPage);
 
     @GET("user")
     Call<UserDto> getUser();

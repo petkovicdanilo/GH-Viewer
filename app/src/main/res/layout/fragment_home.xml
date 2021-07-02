@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.github.petkovicdanilo.ghviewer.viewmodel.ActivitiesViewModel" />
+            type="com.github.petkovicdanilo.ghviewer.viewmodel.EventsViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activities_list"
+                android:id="@+id/events_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp" />
