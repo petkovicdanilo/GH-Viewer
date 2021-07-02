@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter()
-@Builder()
+@Getter
+@Builder
 public class CreateRepositoryDto {
     private String name;
 

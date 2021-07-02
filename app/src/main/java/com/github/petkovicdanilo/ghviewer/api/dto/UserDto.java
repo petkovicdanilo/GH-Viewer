@@ -2,7 +2,7 @@ package com.github.petkovicdanilo.ghviewer.api.dto;
 
 import lombok.Getter;
 
-@Getter()
+@Getter
 public class UserDto {
     private String login;
 

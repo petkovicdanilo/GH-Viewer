@@ -6,8 +6,9 @@ import java.util.HashMap;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
-@Getter()
+@Getter
 public class ActivityDto {
 
     private String id;
@@ -55,18 +56,19 @@ public class ActivityDto {
         @SerializedName("WatchEvent")
         WATCH_EVENT("WatchEvent");
 
-        @Getter()
+        @Getter
         private String value;
 
     };
 
-    @Getter()
+    @Getter
+    @ToString
     public class RepositoryDto {
         private int id;
         private String name;
     }
 
-    @Getter()
+    @Getter
     public class ActorDto {
         private int id;
         private String login;

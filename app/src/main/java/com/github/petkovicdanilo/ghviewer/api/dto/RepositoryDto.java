@@ -3,8 +3,9 @@ package com.github.petkovicdanilo.ghviewer.api.dto;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
+import lombok.ToString;
 
-@Getter()
+@Getter
 public class RepositoryDto {
     private int id;
 
