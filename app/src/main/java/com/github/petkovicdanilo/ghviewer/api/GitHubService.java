@@ -47,16 +47,16 @@ public interface GitHubService {
     Call<TreeDto> getTree(@Path("owner") String owner,
                           @Path("repo") String repositoryName, @Path("sha") String sha);
 
-    @GET("repos/{owner}/{repo}/git/branches/{sha}")
+    @GET("repos/{owner}/{repo}/branches/{branch}")
     Call<BranchDto> getBranch(@Path("owner") String owner,
-                              @Path("repo") String repositoryName, @Path("sha") String sha);
+                              @Path("repo") String repositoryName, @Path("branch") String branch);
 
-    @GET("repos/{owner}/{repo}/git/branches")
+    @GET("repos/{owner}/{repo}/branches")
     Call<List<BranchSimpleDto>> getBranches(@Path("owner") String owner,
                                             @Path("repo") String repositoryName);
 
     @GET("repos/{owner}/{repo}/git/blobs/{sha}")
     Call<BlobDto> getBlob(@Path("owner") String owner,
-                            @Path("repo") String repositoryName, @Path("sha") String sha);
+                          @Path("repo") String repositoryName, @Path("sha") String sha);
 }
 

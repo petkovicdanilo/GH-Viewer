@@ -4,19 +4,41 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.R;
+import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
+import com.github.petkovicdanilo.ghviewer.api.dto.git.BlobDto;
+import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoryBinding;
+import com.github.petkovicdanilo.ghviewer.view.adapter.EventsAdapter;
+import com.github.petkovicdanilo.ghviewer.view.adapter.RepositoriesAdapter;
+import com.github.petkovicdanilo.ghviewer.view.adapter.TreeAdapter;
+import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryViewModel;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RepositoryFragment extends Fragment {
 
     private static final String TAG = "RepositoryFragment";
-    
+
+    private RepositoryViewModel viewModel;
+    private TreeAdapter adapter = new TreeAdapter(Arrays.asList());
+    private FragmentRepositoryBinding binding;
+
     public RepositoryFragment() {
         // Required empty public constructor
     }
@@ -34,16 +56,37 @@ public class RepositoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_repository, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repository, container, false);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+        View view = binding.getRoot();
+
+        viewModel = new ViewModelProvider(requireActivity()).get(RepositoryViewModel.class);
+        binding.setViewModel(viewModel);
+
+        viewModel.getCurrentTree().observe(getViewLifecycleOwner(), events -> updateAdapter());
+        updateAdapter();
+
+        return view;
+    }
+
+    private void updateAdapter() {
+        if(viewModel.getCurrentTree().getValue() != null) {
+            adapter = new TreeAdapter(viewModel.getCurrentTree().getValue().getTree());
+            binding.repositoryTree.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.repositoryTree.setAdapter(adapter);
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
         RepositoryFragmentArgs args = RepositoryFragmentArgs.fromBundle(getArguments());
 
-        Log.i(TAG, args.getRepositoryName());
+        String[] ownerAndRepoName = args.getRepositoryName().split("/");
+        String owner = ownerAndRepoName[0];
+        String repositoryName = ownerAndRepoName[1];
+
+        viewModel.loadRepository(owner, repositoryName);
     }
 }
