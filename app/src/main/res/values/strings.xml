@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">GH Viewer</string>
+    <string name="app_name">GitHub Viewer</string>
     <string name="logout">Log out</string>
     <string name="create_repo">Create repository</string>
     <string name="log_in">Log in</string>
     <string name="home">Home</string>
     <string name="repositories">Repositories</string>
-    <string name="enter_repository_name">Enter repository name</string>
+    <string name="enter_repository_name">Enter query</string>
     <string name="search">Search</string>
     <string name="my_repositories">My repositories</string>
     <string name="load_more">Load more</string>

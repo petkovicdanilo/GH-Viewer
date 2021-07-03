@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitHub pretraživač</string>
+    <string name="logout">Odjavi se</string>
+    <string name="create_repo">Kreiraj repozitorijum</string>
+    <string name="log_in">Prijavi se</string>
+    <string name="home">Početak</string>
+    <string name="repositories">Repozitorijumi</string>
+    <string name="enter_repository_name">Unesi upit</string>
+    <string name="search">Traži</string>
+    <string name="my_repositories">Moji repozitorijumi</string>
+    <string name="load_more">Učitaj još</string>
+    <string name="is_private_repo">privatan</string>
+    <string name="current_branch">grana: %1$s</string>
+</resources>
