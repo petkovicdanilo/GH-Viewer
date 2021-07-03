@@ -4,7 +4,6 @@ import com.github.petkovicdanilo.ghviewer.api.dto.EventDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.CreateRepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.BlobDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.BranchDto;
-import com.github.petkovicdanilo.ghviewer.api.dto.git.BranchSimpleDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositorySearchResultDto;
@@ -50,10 +49,6 @@ public interface GitHubService {
     @GET("repos/{owner}/{repo}/branches/{branch}")
     Call<BranchDto> getBranch(@Path("owner") String owner,
                               @Path("repo") String repositoryName, @Path("branch") String branch);
-
-    @GET("repos/{owner}/{repo}/branches")
-    Call<List<BranchSimpleDto>> getBranches(@Path("owner") String owner,
-                                            @Path("repo") String repositoryName);
 
     @GET("repos/{owner}/{repo}/git/blobs/{sha}")
     Call<BlobDto> getBlob(@Path("owner") String owner,

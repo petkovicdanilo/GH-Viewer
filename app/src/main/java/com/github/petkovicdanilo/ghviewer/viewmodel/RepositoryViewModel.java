@@ -23,7 +23,7 @@ public class RepositoryViewModel extends ViewModel {
     private MutableLiveData<RepositoryDto> repository = new MutableLiveData<>();
 
     @Getter
-    private String currentBranch;
+    private MutableLiveData<String> currentBranch = new MutableLiveData<>();
 
     @Getter
     private MutableLiveData<TreeDto> currentTree = new MutableLiveData<>();
@@ -54,10 +54,10 @@ public class RepositoryViewModel extends ViewModel {
     }
 
     public void loadBranch(String newBranch) {
-        currentBranch = newBranch;
+        currentBranch.setValue(newBranch);
 
         Call<BranchDto> call = gitHubService.getBranch(repository.getValue().getOwner().getLogin(),
-                repository.getValue().getName(), currentBranch);
+                repository.getValue().getName(), currentBranch.getValue());
         call.enqueue(new Callback<BranchDto>() {
             @Override
             public void onResponse(Call<BranchDto> call, Response<BranchDto> response) {
