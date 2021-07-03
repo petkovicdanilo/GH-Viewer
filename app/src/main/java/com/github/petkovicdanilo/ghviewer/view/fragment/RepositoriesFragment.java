@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -12,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.R;
+import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoriesBinding;
 import com.github.petkovicdanilo.ghviewer.view.adapter.RepositoriesAdapter;
 import com.github.petkovicdanilo.ghviewer.viewmodel.MyRepositoriesViewModel;
 
-public class RepositoriesFragment extends Fragment {
+public class RepositoriesFragment extends Fragment implements RepositoriesAdapter.OnRepositoryListener {
 
     private static final String TAG = "RepositoriesFragment";
 
@@ -63,8 +65,17 @@ public class RepositoriesFragment extends Fragment {
     }
 
     private void updateAdapter() {
-        adapter = new RepositoriesAdapter(viewModel.getMyRepositories().getValue());
+        adapter = new RepositoriesAdapter(viewModel.getMyRepositories().getValue(), this);
         binding.myRepositories.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.myRepositories.setAdapter(adapter);
+    }
+
+    @Override
+    public void onRepositoryClick(int position) {
+        RepositoryDto clickedRepository = viewModel.getMyRepositories().getValue().get(position);
+
+        RepositoriesFragmentDirections.RepositoriesToRepositoryAction action =
+                RepositoriesFragmentDirections.repositoriesToRepositoryAction(clickedRepository.getFullName());
+        Navigation.findNavController(getView()).navigate(action);
     }
 }

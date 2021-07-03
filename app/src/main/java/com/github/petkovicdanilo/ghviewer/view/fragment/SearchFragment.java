@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -12,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.R;
+import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentSearchBinding;
 import com.github.petkovicdanilo.ghviewer.view.adapter.RepositoriesAdapter;
 import com.github.petkovicdanilo.ghviewer.viewmodel.SearchResultsViewModel;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements RepositoriesAdapter.OnRepositoryListener {
 
     private static final String TAG = "SearchFragment";
 
@@ -58,8 +60,17 @@ public class SearchFragment extends Fragment {
     }
 
     private void updateAdapter() {
-        adapter = new RepositoriesAdapter(viewModel.getSearchResults().getValue());
+        adapter = new RepositoriesAdapter(viewModel.getSearchResults().getValue(), this);
         binding.searchResults.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.searchResults.setAdapter(adapter);
+    }
+
+    @Override
+    public void onRepositoryClick(int position) {
+        RepositoryDto clickedRepository = viewModel.getSearchResults().getValue().get(position);
+
+        SearchFragmentDirections.SearchToRepositoryAction action =
+                SearchFragmentDirections.searchToRepositoryAction(clickedRepository.getFullName());
+        Navigation.findNavController(getView()).navigate(action);
     }
 }

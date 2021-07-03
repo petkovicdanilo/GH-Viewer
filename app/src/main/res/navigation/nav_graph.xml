@@ -22,12 +22,28 @@
         android:id="@+id/repositoriesFragment"
         android:name="com.github.petkovicdanilo.ghviewer.view.fragment.RepositoriesFragment"
         android:label="fragment_repositories"
-        tools:layout="@layout/fragment_repositories" />
+        tools:layout="@layout/fragment_repositories" >
+        <action
+            android:id="@+id/repositoriesToRepositoryAction"
+            app:destination="@id/repositoryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.github.petkovicdanilo.ghviewer.view.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/searchToRepositoryAction"
+            app:destination="@id/repositoryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/repositoryFragment"
         android:name="com.github.petkovicdanilo.ghviewer.view.fragment.RepositoryFragment"
