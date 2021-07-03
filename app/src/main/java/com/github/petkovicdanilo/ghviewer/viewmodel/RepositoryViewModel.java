@@ -104,4 +104,8 @@ public class RepositoryViewModel extends ViewModel {
         TreeDto parentTree = parentTrees.pop();
         currentTree.postValue(parentTree);
     }
+
+    public boolean isOnRootTree() {
+        return currentTree.getValue() != null && parentTrees.size() == 0;
+    }
 }

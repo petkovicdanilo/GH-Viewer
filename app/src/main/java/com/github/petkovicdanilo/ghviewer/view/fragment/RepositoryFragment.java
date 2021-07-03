@@ -2,14 +2,18 @@ package com.github.petkovicdanilo.ghviewer.view.fragment;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +42,18 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this,
+                new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (viewModel.isOnRootTree()) {
+                    NavHostFragment.findNavController(RepositoryFragment.this).popBackStack();
+                } else {
+                    viewModel.loadParentTree();
+                }
+            }
+        });
     }
 
     @Override
