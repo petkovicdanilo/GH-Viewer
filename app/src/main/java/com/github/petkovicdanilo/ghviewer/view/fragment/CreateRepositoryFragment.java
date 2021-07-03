@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +54,8 @@ public class CreateRepositoryFragment extends Fragment implements CreateReposito
     @Override
     public void onRepositoryCreated() {
         Log.i(TAG, "Repository created");
+        Toast.makeText(getContext(), "Repository created", Toast.LENGTH_LONG).show();
+        NavHostFragment.findNavController(this).popBackStack();
     }
 
     @Override

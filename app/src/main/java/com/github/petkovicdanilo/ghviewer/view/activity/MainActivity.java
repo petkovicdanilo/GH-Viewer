@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
-        NavigationUI.setupWithNavController(bottomNav, navController);
+        NavigationUI.setupWithNavController(binding.bottomNav, navController);
     }
 
     @Override
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.create_repo:
+                uncheckBottomNav();
                 navController.navigate(R.id.create_repo_action);
                 return true;
             case R.id.logout:
@@ -70,4 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void uncheckBottomNav() {
+        Menu bottomNavMenu = binding.bottomNav.getMenu();
+
+        bottomNavMenu.setGroupCheckable(0, true, false);
+        for(int i = 0; i < bottomNavMenu.size(); i++) {
+            bottomNavMenu.getItem(i).setChecked(false);
+        }
+        bottomNavMenu.setGroupCheckable(0, true, true);
+    }
+
 }
