@@ -30,11 +30,6 @@ public class SearchFragment extends Fragment implements RepositoriesAdapter.OnRe
         // Required empty public constructor
     }
 
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

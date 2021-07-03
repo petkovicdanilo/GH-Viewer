@@ -33,11 +33,6 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
         // Required empty public constructor
     }
 
-    public static RepositoryFragment newInstance() {
-        RepositoryFragment fragment = new RepositoryFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

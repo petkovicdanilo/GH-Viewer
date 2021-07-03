@@ -31,11 +31,6 @@ public class RepositoriesFragment extends Fragment implements RepositoriesAdapte
         // Required empty public constructor
     }
 
-    public static RepositoriesFragment newInstance() {
-        RepositoriesFragment fragment = new RepositoriesFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

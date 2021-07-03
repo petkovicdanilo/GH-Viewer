@@ -33,11 +33,6 @@ public class HomeFragment extends Fragment implements EventsAdapter.OnEventListe
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
