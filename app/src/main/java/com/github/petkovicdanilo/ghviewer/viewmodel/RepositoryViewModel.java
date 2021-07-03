@@ -85,9 +85,7 @@ public class RepositoryViewModel extends ViewModel {
 
                 if(currentTree.getValue() != null) {
                     parentTrees.push(currentTree.getValue());
-                    TreeDto.TreeItem parentTreeItem = new TreeDto.TreeItem("",
-                            "..", TreeDto.TreeItemType.TREE);
-                    tree.getTree().add(0, parentTreeItem);
+                    tree.getTree().add(0, TreeDto.TreeItem.parentTree());
                 }
 
                 currentTree.postValue(tree);

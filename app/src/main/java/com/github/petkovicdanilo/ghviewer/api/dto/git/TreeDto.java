@@ -19,6 +19,10 @@ public class TreeDto {
         private String sha;
         private String path;
         private TreeItemType type;
+
+        public static TreeItem parentTree() {
+            return new TreeItem("", "..", TreeItemType.TREE);
+        }
     }
 
     public enum TreeItemType {
