@@ -28,7 +28,6 @@ public class RepositoryViewModel extends ViewModel {
     @Getter
     private MutableLiveData<TreeDto> currentTree = new MutableLiveData<>();
 
-    private String rootTreeSha;
     private Stack<TreeDto> parentTrees = new Stack<>();
 
     private static final String TAG = "RepositoryViewModel";
@@ -64,7 +63,6 @@ public class RepositoryViewModel extends ViewModel {
             public void onResponse(Call<BranchDto> call, Response<BranchDto> response) {
                 String treeSha =
                         response.body().getCommit().getCommit().getTree().getSha();
-                rootTreeSha = treeSha;
                 loadTree(treeSha);
             }
 
