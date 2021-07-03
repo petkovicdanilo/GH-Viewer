@@ -38,6 +38,13 @@
             android:layout_height="wrap_content"
             android:checked="@={viewModel.isPrivate}"
             android:text="@string/is_private_repo" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.create()}"
+            android:text="Create"/>
     </LinearLayout>
 
 </layout>

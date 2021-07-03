@@ -21,7 +21,7 @@ import retrofit2.http.Query;
 
 public interface GitHubService {
     @POST("user/repos")
-    Call<RepositoryDto> createRepo(@Body() CreateRepositoryDto createRepo);
+    Call<RepositoryDto> createRepository(@Body() CreateRepositoryDto createRepo);
 
     @GET("users/{username}/received_events")
     Call<List<EventDto>> getEvents(@Path("username") String username,
