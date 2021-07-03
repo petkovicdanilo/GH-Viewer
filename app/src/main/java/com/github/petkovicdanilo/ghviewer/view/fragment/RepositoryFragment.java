@@ -9,28 +9,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.R;
-import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
-import com.github.petkovicdanilo.ghviewer.api.dto.git.BlobDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoryBinding;
-import com.github.petkovicdanilo.ghviewer.view.adapter.EventsAdapter;
-import com.github.petkovicdanilo.ghviewer.view.adapter.RepositoriesAdapter;
 import com.github.petkovicdanilo.ghviewer.view.adapter.TreeAdapter;
 import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryViewModel;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeItemListener {
 
@@ -96,11 +85,10 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
         TreeDto.TreeItem treeItemClicked =
                 viewModel.getCurrentTree().getValue().getTree().get(position);
 
-        if(treeItemClicked.getType() == TreeDto.TreeItemType.TREE) {
-            if(treeItemClicked.getPath().equals("..")) {
+        if (treeItemClicked.getType() == TreeDto.TreeItemType.TREE) {
+            if (treeItemClicked.getPath().equals("..")) {
                 viewModel.loadParentTree();
-            }
-            else {
+            } else {
                 viewModel.loadTree(treeItemClicked.getSha());
             }
         }
