@@ -29,14 +29,14 @@ public class RepositoryViewModel extends ViewModel {
     private MutableLiveData<TreeDto> currentTree = new MutableLiveData<>();
 
     private String rootTreeSha;
-    private Stack<String> parentTreeShas = new Stack<>();
+    private Stack<TreeDto> parentTrees = new Stack<>();
 
     private static final String TAG = "RepositoryViewModel";
 
     private final GitHubService gitHubService = ApiHelper.getInstance().getGitHubService();
 
     public void loadRepository(String owner, String name) {
-        parentTreeShas = new Stack<>();
+        parentTrees = new Stack<>();
 
         Call<RepositoryDto> call = gitHubService.getRepository(owner, name);
         call.enqueue(new Callback<RepositoryDto>() {
@@ -75,10 +75,6 @@ public class RepositoryViewModel extends ViewModel {
     }
 
     public void loadTree(String sha) {
-        loadTree(sha, false);
-    }
-
-    private void loadTree(String sha, boolean goingUpTree) {
         Call<TreeDto> call = gitHubService.getTree(repository.getValue().getOwner().getLogin(),
                 repository.getValue().getName(), sha);
         call.enqueue(new Callback<TreeDto>() {
@@ -92,8 +88,8 @@ public class RepositoryViewModel extends ViewModel {
                     tree.getTree().add(0, parentTreeItem);
                 }
 
-                if(!goingUpTree && currentTree.getValue() != null) {
-                    parentTreeShas.push(currentTree.getValue().getSha());
+                if(currentTree.getValue() != null) {
+                    parentTrees.push(currentTree.getValue());
                 }
 
                 currentTree.postValue(tree);
@@ -107,10 +103,11 @@ public class RepositoryViewModel extends ViewModel {
     }
 
     public void loadParentTree() {
-        if(parentTreeShas.size() == 0) {
+        if(parentTrees.size() == 0) {
             return;
         }
 
-        loadTree(parentTreeShas.pop(), true);
+        TreeDto parentTree = parentTrees.pop();
+        currentTree.postValue(parentTree);
     }
 }
