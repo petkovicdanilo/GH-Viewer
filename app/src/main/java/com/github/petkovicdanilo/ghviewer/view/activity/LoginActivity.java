@@ -13,6 +13,7 @@ import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
 import com.github.petkovicdanilo.ghviewer.api.GitHubService;
 import com.github.petkovicdanilo.ghviewer.api.dto.UserDto;
 import com.github.petkovicdanilo.ghviewer.databinding.ActivityLoginBinding;
+import com.github.petkovicdanilo.ghviewer.view.util.SupportedExtensions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GithubAuthProvider;
 import com.google.firebase.auth.OAuthCredential;
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements Callback<UserDto
     public void onResponse(Call<UserDto> call, Response<UserDto> response) {
         if (response.isSuccessful()) {
             ApiHelper.getInstance().setCurrentUser(response.body());
+            SupportedExtensions.initialize(this);
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);

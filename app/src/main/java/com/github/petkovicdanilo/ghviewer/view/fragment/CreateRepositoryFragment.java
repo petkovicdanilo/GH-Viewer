@@ -23,7 +23,7 @@ public class CreateRepositoryFragment extends Fragment implements CreateReposito
     private CreateRepositoryViewModel viewModel;
     private FragmentCreateRepositoryBinding binding;
 
-    private static final String TAG = "CreateRepositoryFragment";
+    private static final String TAG = "CreateRepoFragment";
     
     public CreateRepositoryFragment() {
         // Required empty public constructor

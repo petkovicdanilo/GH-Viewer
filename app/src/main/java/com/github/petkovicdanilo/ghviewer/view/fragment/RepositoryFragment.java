@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.petkovicdanilo.ghviewer.R;
+import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoryBinding;
 import com.github.petkovicdanilo.ghviewer.view.adapter.TreeAdapter;
@@ -80,12 +82,24 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
         TreeDto.TreeItem treeItemClicked =
                 viewModel.getCurrentTree().getValue().getTree().get(position);
 
-        if (treeItemClicked.getType() == TreeDto.TreeItemType.TREE) {
-            if (treeItemClicked.getPath().equals("..")) {
-                viewModel.loadParentTree();
-            } else {
-                viewModel.loadTree(treeItemClicked.getSha());
-            }
+        switch (treeItemClicked.getType()) {
+            case TREE:
+                if (treeItemClicked.getPath().equals("..")) {
+                    viewModel.loadParentTree();
+                } else {
+                    viewModel.loadTree(treeItemClicked.getSha());
+                }
+                break;
+            case BLOB:
+                RepositoryDto repository = viewModel.getRepository().getValue();
+                RepositoryFragmentDirections.RepositoryToBlobAction action =
+                        RepositoryFragmentDirections.repositoryToBlobAction(
+                                repository.getOwner().getLogin(),
+                                repository.getName(),
+                                treeItemClicked.getSha(),
+                                treeItemClicked.getPath());
+                Navigation.findNavController(getView()).navigate(action);
+                break;
         }
     }
 }

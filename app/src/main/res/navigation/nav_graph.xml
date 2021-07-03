@@ -56,10 +56,35 @@
         <argument
             android:name="repositoryName"
             app:argType="string" />
+        <action
+            android:id="@+id/repositoryToBlobAction"
+            app:destination="@id/blobFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/createRepositoryFragment"
         android:name="com.github.petkovicdanilo.ghviewer.view.fragment.CreateRepositoryFragment"
         android:label="fragment_create_repository"
         tools:layout="@layout/fragment_create_repository" />
+    <fragment
+        android:id="@+id/blobFragment"
+        android:name="com.github.petkovicdanilo.ghviewer.view.fragment.BlobFragment"
+        android:label="fragment_blob"
+        tools:layout="@layout/fragment_blob" >
+        <argument
+            android:name="owner"
+            app:argType="string" />
+        <argument
+            android:name="repositoryName"
+            app:argType="string" />
+        <argument
+            android:name="sha"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>
