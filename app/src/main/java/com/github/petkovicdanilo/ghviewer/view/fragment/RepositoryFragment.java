@@ -8,12 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,7 @@ import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoryBinding;
 import com.github.petkovicdanilo.ghviewer.view.adapter.TreeAdapter;
+import com.github.petkovicdanilo.ghviewer.view.util.BottomNav;
 import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryViewModel;
 
 import java.util.Arrays;
@@ -42,6 +41,8 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        BottomNav.unselect(requireActivity());
 
         requireActivity().getOnBackPressedDispatcher().addCallback(this,
                 new OnBackPressedCallback(true) {
