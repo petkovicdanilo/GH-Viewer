@@ -37,6 +37,7 @@ public class RepositoryViewModel extends ViewModel {
 
     public void loadRepository(String owner, String name) {
         parentTrees = new Stack<>();
+        currentTree.setValue(null);
 
         Call<RepositoryDto> call = gitHubService.getRepository(owner, name);
         call.enqueue(new Callback<RepositoryDto>() {
@@ -82,14 +83,11 @@ public class RepositoryViewModel extends ViewModel {
             public void onResponse(Call<TreeDto> call, Response<TreeDto> response) {
                 TreeDto tree = response.body();
 
-                if (!tree.getSha().equals(rootTreeSha)) {
+                if(currentTree.getValue() != null) {
+                    parentTrees.push(currentTree.getValue());
                     TreeDto.TreeItem parentTreeItem = new TreeDto.TreeItem("",
                             "..", TreeDto.TreeItemType.TREE);
                     tree.getTree().add(0, parentTreeItem);
-                }
-
-                if(currentTree.getValue() != null) {
-                    parentTrees.push(currentTree.getValue());
                 }
 
                 currentTree.postValue(tree);
