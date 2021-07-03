@@ -97,7 +97,12 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
                 viewModel.getCurrentTree().getValue().getTree().get(position);
 
         if(treeItemClicked.getType() == TreeDto.TreeItemType.TREE) {
-            viewModel.loadTree(treeItemClicked.getSha());
+            if(treeItemClicked.getPath().equals("..")) {
+                viewModel.loadParentTree();
+            }
+            else {
+                viewModel.loadTree(treeItemClicked.getSha());
+            }
         }
     }
 }

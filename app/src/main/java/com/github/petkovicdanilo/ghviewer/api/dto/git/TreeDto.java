@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
@@ -13,7 +14,8 @@ public class TreeDto {
     private List<TreeItem> tree;
 
     @Getter
-    public class TreeItem {
+    @AllArgsConstructor
+    public static class TreeItem {
         private String sha;
         private String path;
         private TreeItemType type;

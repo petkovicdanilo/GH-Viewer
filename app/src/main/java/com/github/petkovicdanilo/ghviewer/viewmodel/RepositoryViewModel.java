@@ -11,6 +11,8 @@ import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.BranchDto;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 
+import java.util.Stack;
+
 import lombok.Getter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,11 +28,16 @@ public class RepositoryViewModel extends ViewModel {
     @Getter
     private MutableLiveData<TreeDto> currentTree = new MutableLiveData<>();
 
+    private String rootTreeSha;
+    private Stack<String> parentTreeShas = new Stack<>();
+
     private static final String TAG = "RepositoryViewModel";
 
     private final GitHubService gitHubService = ApiHelper.getInstance().getGitHubService();
 
     public void loadRepository(String owner, String name) {
+        parentTreeShas = new Stack<>();
+
         Call<RepositoryDto> call = gitHubService.getRepository(owner, name);
         call.enqueue(new Callback<RepositoryDto>() {
             @Override
@@ -56,6 +63,7 @@ public class RepositoryViewModel extends ViewModel {
             public void onResponse(Call<BranchDto> call, Response<BranchDto> response) {
                 String treeSha =
                         response.body().getCommit().getCommit().getTree().getSha();
+                rootTreeSha = treeSha;
                 loadTree(treeSha);
             }
 
@@ -67,12 +75,28 @@ public class RepositoryViewModel extends ViewModel {
     }
 
     public void loadTree(String sha) {
+        loadTree(sha, false);
+    }
+
+    private void loadTree(String sha, boolean goingUpTree) {
         Call<TreeDto> call = gitHubService.getTree(repository.getValue().getOwner().getLogin(),
                 repository.getValue().getName(), sha);
         call.enqueue(new Callback<TreeDto>() {
             @Override
             public void onResponse(Call<TreeDto> call, Response<TreeDto> response) {
-                currentTree.postValue(response.body());
+                TreeDto tree = response.body();
+
+                if (!tree.getSha().equals(rootTreeSha)) {
+                    TreeDto.TreeItem parentTreeItem = new TreeDto.TreeItem("",
+                            "..", TreeDto.TreeItemType.TREE);
+                    tree.getTree().add(0, parentTreeItem);
+                }
+
+                if(!goingUpTree && currentTree.getValue() != null) {
+                    parentTreeShas.push(currentTree.getValue().getSha());
+                }
+
+                currentTree.postValue(tree);
             }
 
             @Override
@@ -80,5 +104,13 @@ public class RepositoryViewModel extends ViewModel {
                 Log.e(TAG, "Failed to load tree");
             }
         });
+    }
+
+    public void loadParentTree() {
+        if(parentTreeShas.size() == 0) {
+            return;
+        }
+
+        loadTree(parentTreeShas.pop(), true);
     }
 }
