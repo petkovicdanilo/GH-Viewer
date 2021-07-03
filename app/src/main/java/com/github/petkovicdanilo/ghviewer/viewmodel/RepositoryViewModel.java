@@ -66,7 +66,7 @@ public class RepositoryViewModel extends ViewModel {
         });
     }
 
-    private void loadTree(String sha) {
+    public void loadTree(String sha) {
         Call<TreeDto> call = gitHubService.getTree(repository.getValue().getOwner().getLogin(),
                 repository.getValue().getName(), sha);
         call.enqueue(new Callback<TreeDto>() {

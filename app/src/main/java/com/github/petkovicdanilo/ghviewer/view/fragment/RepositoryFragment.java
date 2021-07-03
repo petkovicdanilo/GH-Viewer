@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.github.petkovicdanilo.ghviewer.R;
 import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
 import com.github.petkovicdanilo.ghviewer.api.dto.git.BlobDto;
+import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoryBinding;
 import com.github.petkovicdanilo.ghviewer.view.adapter.EventsAdapter;
 import com.github.petkovicdanilo.ghviewer.view.adapter.RepositoriesAdapter;
@@ -31,12 +32,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RepositoryFragment extends Fragment {
+public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeItemListener {
 
     private static final String TAG = "RepositoryFragment";
 
     private RepositoryViewModel viewModel;
-    private TreeAdapter adapter = new TreeAdapter(Arrays.asList());
+    private TreeAdapter adapter = new TreeAdapter(Arrays.asList(), this);
     private FragmentRepositoryBinding binding;
 
     public RepositoryFragment() {
@@ -70,8 +71,8 @@ public class RepositoryFragment extends Fragment {
     }
 
     private void updateAdapter() {
-        if(viewModel.getCurrentTree().getValue() != null) {
-            adapter = new TreeAdapter(viewModel.getCurrentTree().getValue().getTree());
+        if (viewModel.getCurrentTree().getValue() != null) {
+            adapter = new TreeAdapter(viewModel.getCurrentTree().getValue().getTree(), this);
             binding.repositoryTree.setLayoutManager(new LinearLayoutManager(getContext()));
             binding.repositoryTree.setAdapter(adapter);
         }
@@ -88,5 +89,15 @@ public class RepositoryFragment extends Fragment {
         String repositoryName = ownerAndRepoName[1];
 
         viewModel.loadRepository(owner, repositoryName);
+    }
+
+    @Override
+    public void onTreeItemClicked(int position) {
+        TreeDto.TreeItem treeItemClicked =
+                viewModel.getCurrentTree().getValue().getTree().get(position);
+
+        if(treeItemClicked.getType() == TreeDto.TreeItemType.TREE) {
+            viewModel.loadTree(treeItemClicked.getSha());
+        }
     }
 }

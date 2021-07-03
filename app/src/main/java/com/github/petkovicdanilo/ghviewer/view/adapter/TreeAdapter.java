@@ -20,8 +20,11 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.ViewHolder> {
     @Getter
     private List<TreeDto.TreeItem> treeItems;
 
-    public TreeAdapter(List<TreeDto.TreeItem> treeItems) {
+    private OnTreeItemListener onTreeItemListener;
+
+    public TreeAdapter(List<TreeDto.TreeItem> treeItems, OnTreeItemListener onTreeItemListener) {
         this.treeItems = treeItems;
+        this.onTreeItemListener = onTreeItemListener;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.ViewHolder> {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tree_item, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, onTreeItemListener);
     }
 
     @Override
@@ -45,15 +48,31 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.ViewHolder> {
         return treeItems.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Getter
         private TextView treeItemName;
 
-        public ViewHolder(View view) {
+        private OnTreeItemListener listener;
+
+        public ViewHolder(View view, OnTreeItemListener listener) {
             super(view);
 
+            this.listener = listener;
+
             treeItemName = view.findViewById(R.id.tree_item_name);
+
+            view.setOnClickListener(this);
         }
+
+
+        @Override
+        public void onClick(View v) {
+            listener.onTreeItemClicked(getAdapterPosition());
+        }
+    }
+
+    public interface OnTreeItemListener {
+        void onTreeItemClicked(int position);
     }
 }
