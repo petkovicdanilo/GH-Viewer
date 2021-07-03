@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <action
+        android:id="@+id/create_repo_action"
+        app:destination="@+id/createRepositoryFragment"/>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.github.petkovicdanilo.ghviewer.view.fragment.HomeFragment"
@@ -53,4 +57,9 @@
             android:name="repositoryName"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/createRepositoryFragment"
+        android:name="com.github.petkovicdanilo.ghviewer.view.fragment.CreateRepositoryFragment"
+        android:label="fragment_create_repository"
+        tools:layout="@layout/fragment_create_repository" />
 </navigation>

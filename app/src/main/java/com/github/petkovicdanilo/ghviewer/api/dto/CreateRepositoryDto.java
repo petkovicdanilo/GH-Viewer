@@ -12,4 +12,8 @@ public class CreateRepositoryDto {
 
     @SerializedName("private")
     private boolean privateRepo;
+
+    private String description;
+
+    private String homepage;
 }
