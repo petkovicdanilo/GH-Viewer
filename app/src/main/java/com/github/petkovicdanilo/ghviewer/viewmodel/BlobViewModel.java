@@ -27,6 +27,7 @@ public class BlobViewModel extends ViewModel {
 
     public void loadBlob(String owner, String repository, String sha, String name) {
         if(blob.getValue() != null && sha.equals(blob.getValue().getSha())) {
+            listener.onBlobLoaded();
             return;
         }
 
