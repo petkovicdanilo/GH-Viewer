@@ -3,11 +3,13 @@ package com.github.petkovicdanilo.ghviewer.view.fragment;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Base64;
 import android.util.Log;
@@ -21,9 +23,9 @@ import com.github.petkovicdanilo.ghviewer.api.dto.git.BlobDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentBlobBinding;
 import com.github.petkovicdanilo.ghviewer.view.util.SupportedExtensions;
 import com.github.petkovicdanilo.ghviewer.viewmodel.BlobViewModel;
+import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryBlobViewModel;
 
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.IOException;
@@ -37,6 +39,7 @@ public class BlobFragment extends Fragment implements BlobViewModel.OnBlobListen
 
     private FragmentBlobBinding binding;
     private BlobViewModel viewModel;
+    private RepositoryBlobViewModel repoBlobViewModel;
 
     public BlobFragment() {
         // Required empty public constructor
@@ -45,6 +48,15 @@ public class BlobFragment extends Fragment implements BlobViewModel.OnBlobListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this,
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        repoBlobViewModel.setReload(false);
+                        NavHostFragment.findNavController(BlobFragment.this).popBackStack();
+                    }
+                });
     }
 
     @Override
@@ -58,6 +70,9 @@ public class BlobFragment extends Fragment implements BlobViewModel.OnBlobListen
         viewModel.setListener(this);
 
         binding.setViewModel(viewModel);
+
+        repoBlobViewModel =
+                new ViewModelProvider(requireActivity()).get(RepositoryBlobViewModel.class);
 
         WebSettings settings = binding.blobContent.getSettings();
         settings.setJavaScriptEnabled(true);

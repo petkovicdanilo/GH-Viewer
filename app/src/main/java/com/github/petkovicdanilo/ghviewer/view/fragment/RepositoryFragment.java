@@ -22,16 +22,18 @@ import com.github.petkovicdanilo.ghviewer.api.dto.git.TreeDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoryBinding;
 import com.github.petkovicdanilo.ghviewer.view.adapter.TreeAdapter;
 import com.github.petkovicdanilo.ghviewer.view.util.BottomNav;
+import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryBlobViewModel;
 import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryViewModel;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeItemListener {
 
     private static final String TAG = "RepositoryFragment";
 
     private RepositoryViewModel viewModel;
-    private TreeAdapter adapter = new TreeAdapter(Arrays.asList(), this);
+    private RepositoryBlobViewModel repoBlobViewModel;
+    private TreeAdapter adapter = new TreeAdapter(Collections.emptyList(), this);
     private FragmentRepositoryBinding binding;
 
     public RepositoryFragment() {
@@ -46,15 +48,15 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
 
         requireActivity().getOnBackPressedDispatcher().addCallback(this,
                 new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (viewModel.isOnRootTree()) {
-                    NavHostFragment.findNavController(RepositoryFragment.this).popBackStack();
-                } else {
-                    viewModel.loadParentTree();
-                }
-            }
-        });
+                    @Override
+                    public void handleOnBackPressed() {
+                        if (viewModel.isOnRootTree()) {
+                            NavHostFragment.findNavController(RepositoryFragment.this).popBackStack();
+                        } else {
+                            viewModel.loadParentTree();
+                        }
+                    }
+                });
     }
 
     @Override
@@ -66,6 +68,9 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
 
         viewModel = new ViewModelProvider(requireActivity()).get(RepositoryViewModel.class);
         binding.setViewModel(viewModel);
+
+        repoBlobViewModel =
+                new ViewModelProvider(requireActivity()).get(RepositoryBlobViewModel.class);
 
         viewModel.getCurrentTree().observe(getViewLifecycleOwner(), events -> updateAdapter());
         updateAdapter();
@@ -91,7 +96,11 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
         String owner = ownerAndRepoName[0];
         String repositoryName = ownerAndRepoName[1];
 
-        viewModel.loadRepository(owner, repositoryName);
+        if (repoBlobViewModel.doReload()) {
+            viewModel.loadRepository(owner, repositoryName);
+        }
+
+        repoBlobViewModel.setReload(true);
     }
 
     @Override
