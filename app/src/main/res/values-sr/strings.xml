@@ -12,4 +12,5 @@
     <string name="load_more">Учитај још</string>
     <string name="is_private_repo">приватан</string>
     <string name="current_branch">грана: %1$s</string>
+    <string name="clear">Очисти</string>
 </resources>

@@ -77,10 +77,14 @@ public class SearchResultsViewModel extends ViewModel {
     }
 
     public void search() {
+        clear();
+
+        loadNextPage();
+    }
+
+    public void clear() {
         nextPage = 1;
         done.setValue(false);
         searchResults.setValue(new ArrayList<>());
-
-        loadNextPage();
     }
 }
