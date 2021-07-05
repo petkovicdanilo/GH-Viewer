@@ -48,6 +48,11 @@ public class EventsViewModel extends ViewModel {
             @Override
             public void onResponse(Call<List<EventDto>> call,
                                    Response<List<EventDto>> response) {
+                if(!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to load events");
+                    return;
+                }
+
                 List<EventDto> events = response.body();
 
                 if(events.size() < perPage) {

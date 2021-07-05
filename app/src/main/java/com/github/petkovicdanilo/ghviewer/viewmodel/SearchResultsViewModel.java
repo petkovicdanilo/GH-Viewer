@@ -51,6 +51,12 @@ public class SearchResultsViewModel extends ViewModel {
             @Override
             public void onResponse(Call<RepositorySearchResultDto> call,
                                    Response<RepositorySearchResultDto> response) {
+
+                if(!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to search for repositories");
+                    return;
+                }
+
                 List<RepositoryDto> repositories = response.body().getItems();
 
                 if (repositories.size() < perPage) {

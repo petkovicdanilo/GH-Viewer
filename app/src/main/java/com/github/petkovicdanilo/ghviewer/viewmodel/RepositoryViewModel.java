@@ -42,6 +42,11 @@ public class RepositoryViewModel extends ViewModel {
         call.enqueue(new Callback<RepositoryDto>() {
             @Override
             public void onResponse(Call<RepositoryDto> call, Response<RepositoryDto> response) {
+                if(!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to load repository");
+                    return;
+                }
+
                 repository.setValue(response.body());
                 loadBranch(repository.getValue().getDefaultBranch());
             }
@@ -61,6 +66,11 @@ public class RepositoryViewModel extends ViewModel {
         call.enqueue(new Callback<BranchDto>() {
             @Override
             public void onResponse(Call<BranchDto> call, Response<BranchDto> response) {
+                if(!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to load branch");
+                    return;
+                }
+
                 String treeSha =
                         response.body().getCommit().getCommit().getTree().getSha();
                 loadTree(treeSha);
@@ -79,6 +89,11 @@ public class RepositoryViewModel extends ViewModel {
         call.enqueue(new Callback<TreeDto>() {
             @Override
             public void onResponse(Call<TreeDto> call, Response<TreeDto> response) {
+                if(!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to load tree");
+                    return;
+                }
+
                 TreeDto tree = response.body();
 
                 if(currentTree.getValue() != null) {

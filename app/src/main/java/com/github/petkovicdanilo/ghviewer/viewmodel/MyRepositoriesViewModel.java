@@ -48,6 +48,11 @@ public class MyRepositoriesViewModel extends ViewModel {
             @Override
             public void onResponse(Call<List<RepositoryDto>> call,
                                    Response<List<RepositoryDto>> response) {
+                if(!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to load my repositories");
+                    return;
+                }
+
                 List<RepositoryDto> newRepositories = response.body();
 
                 if (newRepositories.size() < perPage) {
