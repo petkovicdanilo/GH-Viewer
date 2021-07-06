@@ -50,6 +50,7 @@ public class CreateRepositoryViewModel extends ViewModel {
             @Override
             public void onResponse(Call<RepositoryDto> call, Response<RepositoryDto> response) {
                 if (response.isSuccessful()) {
+                    clear();
                     onCreateRepositoryListener.onRepositoryCreated();
                 } else {
                     onCreateRepositoryListener.onRepositoryCreationFail("Repository not created");
@@ -62,6 +63,13 @@ public class CreateRepositoryViewModel extends ViewModel {
                 onCreateRepositoryListener.onRepositoryCreationFail(t.getMessage());
             }
         });
+    }
+
+    private void clear() {
+        name.setValue("");
+        description.setValue("");
+        isPrivate.setValue(false);
+        homepage.setValue("");
     }
 
     public interface OnCreateRepositoryListener {

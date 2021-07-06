@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.fragment.CreateRepositoryFragment">
 
@@ -10,41 +11,76 @@
             type="com.github.petkovicdanilo.ghviewer.viewmodel.CreateRepositoryViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginEnd="@dimen/margin_end"
+        android:padding="@dimen/fragment_root_padding">
 
-        <EditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text="@={viewModel.name}" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="3"
-            android:text="@={viewModel.description}" />
+            <TextView
+                android:id="@+id/create_repo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/title_bottom_margin"
+                android:text="@string/create_repository_title"
+                android:textSize="@dimen/title_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text="@={viewModel.homepage}" />
+            <EditText
+                android:id="@+id/create_repo_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:maxLines="1"
+                android:text="@={viewModel.name}"
+                android:layout_marginEnd="@dimen/create_repo_margin_end"
+                app:layout_constraintTop_toBottomOf="@id/create_repo_title" />
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="@={viewModel.isPrivate}"
-            android:text="@string/is_private_repo" />
+            <CheckBox
+                android:id="@+id/create_repo_is_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.isPrivate}"
+                android:text="@string/is_private_repo"
+                android:layout_marginEnd="@dimen/create_repo_margin_end"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_repo_name" />
 
+            <EditText
+                android:id="@+id/create_repo_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:hint="@string/description"
+                android:maxLines="1"
+                android:text="@={viewModel.description}"
+                android:layout_marginEnd="@dimen/create_repo_margin_end"
+                app:layout_constraintTop_toBottomOf="@id/create_repo_is_private" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.create()}"
-            android:text="Create"/>
-    </LinearLayout>
+            <EditText
+                android:id="@+id/create_repo_home_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/home_url"
+                android:maxLines="1"
+                android:text="@={viewModel.homepage}"
+                android:layout_marginEnd="@dimen/create_repo_margin_end"
+                app:layout_constraintTop_toBottomOf="@id/create_repo_description" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.create()}"
+                android:text="@string/create"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_repo_home_url" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

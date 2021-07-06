@@ -6,4 +6,5 @@
     <dimen name="title_bottom_margin">5sp</dimen>
     <dimen name="fragment_root_padding">5sp</dimen>
     <dimen name="item_margin_start">5sp</dimen>
+    <dimen name="create_repo_margin_end">50sp</dimen>
 </resources>

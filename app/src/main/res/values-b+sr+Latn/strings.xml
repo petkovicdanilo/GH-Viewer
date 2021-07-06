@@ -31,4 +31,9 @@
     <string name="release_event">%1$s je izvršio akciju \'%2$s\' za  novu verziju u repositorijumu %3$s</string>
     <string name="sponsorship_event">%1$s je izvršio akciju \'%2$s\' za sponzorstvo u repozitorijumu %3$s</string>
     <string name="watch_event">%1$s posmatra repozitorijum %2$s</string>
+    <string name="create_repository_title">Kreiraj repozitorijum</string>
+    <string name="name">naziv</string>
+    <string name="description">opis</string>
+    <string name="home_url">početni url</string>
+    <string name="create">Kreiraj</string>
 </resources>

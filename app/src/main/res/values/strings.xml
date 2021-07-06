@@ -30,4 +30,9 @@
     <string name="release_event">%1$s %2$s release in repository %3$s</string>
     <string name="sponsorship_event">%1$s %2$s sponsorship in repository %3$s</string>
     <string name="watch_event">%1$s watches repository %2$s</string>
+    <string name="create_repository_title">Create repository</string>
+    <string name="name">name</string>
+    <string name="description">description</string>
+    <string name="home_url">home url</string>
+    <string name="create">Create</string>
 </resources>
