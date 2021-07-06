@@ -17,14 +17,8 @@ public class RepositoryDto {
 
     private UserDto owner;
 
-    private RepositoryVisibility visibility;
+    @SerializedName("private")
+    private boolean isPrivate;
 
     private String defaultBranch;
-
-    public enum RepositoryVisibility {
-        @SerializedName("public")
-        PUBLIC,
-        @SerializedName("private")
-        PRIVATE
-    }
 }
