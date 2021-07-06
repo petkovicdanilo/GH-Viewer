@@ -15,4 +15,20 @@
     <string name="clear">Очисти</string>
     <string name="home_page">Почетна</string>
     <string name="search_title">Тражи</string>
+    <string name="commit_comment_event">%1$s је коментарисао комит у репозиторијуму %2$s</string>
+    <string name="create_event">%1$s је креирао %2$s у репозиторијуму %3$s</string>
+    <string name="delete_event">%1$s је обрисао %2$s у репозиторујуму %3$s</string>
+    <string name="fork_event">%1$s је форковао репозиторијум %2$s</string>
+    <string name="gollum_event">%1$s је креирао или изменио wiki у репозиторијуму %2$s</string>
+    <string name="issue_comment_event">%1$s је извршио акцију \'%2$s\' на коментар на issue у репозиторијуму %3$s</string>
+    <string name="issues_event">%1$s је извршио акцију \'%2$s\' на issue у репозиторијуму %3$s</string>
+    <string name="member_event">%1$s је извршио акцију \'%2$s\' за члана у репозиторијуму %3$s</string>
+    <string name="public_event">%1$s је отворио репозиторијум %2$s да буде јавни</string>
+    <string name="pull_request_event">%1$s је извршио акцију \'%2$s\' за pull request у репозиторијуму %3$s</string>
+    <string name="pull_request_review_event">%1$s је извршио акцију \'%2$s\' за pull request review у репозиторијуму %3$s</string>
+    <string name="pull_request_review_comment_event">%1$s је извршио акцију \'%2$s\' за pull request review коментар у репозиторијуму %3$s</string>
+    <string name="push_event">%1$s је поделио своје промене у репозиторијуму %2$s</string>
+    <string name="release_event">%1$s је извршио акцију \'%2$s\' за  нову верзију у репоситоријуму %3$s</string>
+    <string name="sponsorship_event">%1$s је извршио акцију \'%2$s\' за спонзорство у репозиторијуму %3$s</string>
+    <string name="watch_event">%1$s посматра репозиторијум %2$s</string>
 </resources>
