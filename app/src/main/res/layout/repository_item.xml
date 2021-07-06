@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="2.5dp">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/repository_owner_avatar"
+        tools:src="@drawable/ic_baseline_person_24"
+        android:background="@drawable/avatar_background"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/repository_search_item_name"/>
+        android:id="@+id/repository_search_item_name"
+        tools:text="octocat/hello-world"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center"/>
 
-</FrameLayout>
+</LinearLayout>

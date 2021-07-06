@@ -60,7 +60,8 @@ public class RepositoriesFragment extends Fragment implements RepositoriesAdapte
     }
 
     private void updateAdapter() {
-        adapter = new RepositoriesAdapter(viewModel.getMyRepositories().getValue(), this);
+        adapter = new RepositoriesAdapter(viewModel.getMyRepositories().getValue(), getContext(),
+                this);
         binding.myRepositories.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.myRepositories.setAdapter(adapter);
     }

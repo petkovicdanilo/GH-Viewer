@@ -55,7 +55,8 @@ public class SearchFragment extends Fragment implements RepositoriesAdapter.OnRe
     }
 
     private void updateAdapter() {
-        adapter = new RepositoriesAdapter(viewModel.getSearchResults().getValue(), this);
+        adapter = new RepositoriesAdapter(viewModel.getSearchResults().getValue(), getContext(),
+                this);
         binding.searchResults.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.searchResults.setAdapter(adapter);
     }

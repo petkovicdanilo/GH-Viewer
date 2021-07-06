@@ -1,13 +1,16 @@
 package com.github.petkovicdanilo.ghviewer.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.github.petkovicdanilo.ghviewer.R;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 
@@ -22,10 +25,13 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
 
     private OnRepositoryListener onRepositoryListener;
 
-    public RepositoriesAdapter(List<RepositoryDto> repositories,
+    private Context context;
+
+    public RepositoriesAdapter(List<RepositoryDto> repositories, Context context,
                                OnRepositoryListener onRepositoryListener) {
         this.repositories = repositories;
         this.onRepositoryListener = onRepositoryListener;
+        this.context = context;
     }
 
     @NonNull
@@ -40,6 +46,13 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.getTextView().setText(repositories.get(position).getFullName());
+
+        ImageView ownerAvatar = holder.getOwnerAvatar();
+        RepositoryDto repository = repositories.get(position);
+        Glide.with(context)
+                .load(repository.getOwner().getAvatarUrl())
+                .circleCrop()
+                .into(ownerAvatar);
     }
 
     @Override
@@ -52,12 +65,16 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
         @Getter
         private final TextView textView;
 
+        @Getter
+        private final ImageView ownerAvatar;
+
         private OnRepositoryListener listener;
 
         public ViewHolder(View view, OnRepositoryListener listener) {
             super(view);
 
             textView = view.findViewById(R.id.repository_search_item_name);
+            ownerAvatar = view.findViewById(R.id.repository_owner_avatar);
 
             this.listener = listener;
 
