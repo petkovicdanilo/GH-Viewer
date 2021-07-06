@@ -3,6 +3,7 @@ package com.github.petkovicdanilo.ghviewer.view.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,13 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.ViewHolder> {
         TreeDto.TreeItem treeItem = treeItems.get(position);
 
         holder.getTreeItemName().setText(treeItem.getPath());
+
+        if(treeItem.getType() == TreeDto.TreeItemType.TREE) {
+            holder.getIcon().setImageResource(R.drawable.ic_baseline_folder_24);
+        }
+        else {
+            holder.getIcon().setImageResource(R.drawable.ic_baseline_insert_drive_file_24);
+        }
     }
 
     @Override
@@ -53,6 +61,9 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.ViewHolder> {
         @Getter
         private TextView treeItemName;
 
+        @Getter
+        private ImageView icon;
+
         private OnTreeItemListener listener;
 
         public ViewHolder(View view, OnTreeItemListener listener) {
@@ -61,6 +72,7 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.ViewHolder> {
             this.listener = listener;
 
             treeItemName = view.findViewById(R.id.tree_item_name);
+            icon = view.findViewById(R.id.tree_icon);
 
             view.setOnClickListener(this);
         }
