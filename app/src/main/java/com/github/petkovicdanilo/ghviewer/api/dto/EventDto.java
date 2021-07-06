@@ -62,7 +62,6 @@ public class EventDto {
     };
 
     @Getter
-    @ToString
     public class RepositoryDto {
         private int id;
         private String name;

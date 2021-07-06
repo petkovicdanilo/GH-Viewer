@@ -69,8 +69,6 @@ public class HomeFragment extends Fragment implements EventsAdapter.OnEventListe
     public void onEventClick(int position) {
         EventDto clickedEvent = viewModel.getEvents().getValue().get(position);
 
-        Log.i(TAG, clickedEvent.getRepo().toString());
-
         HomeFragmentDirections.HomeToRepositoryAction action =
                 HomeFragmentDirections.homeToRepositoryAction(clickedEvent.getRepo().getName());
         Navigation.findNavController(getView()).navigate(action);
