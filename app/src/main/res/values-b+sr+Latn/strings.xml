@@ -13,4 +13,6 @@
     <string name="is_private_repo">privatan</string>
     <string name="current_branch">grana: %1$s</string>
     <string name="clear">Očisti</string>
+    <string name="home_page">Početna</string>
+    <string name="search_title">Traži</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_text_size">30sp</dimen>
+    <dimen name="list_padding">5sp</dimen>
+    <dimen name="margin_end">10sp</dimen>
+    <dimen name="title_bottom_margin">5sp</dimen>
+    <dimen name="fragment_root_padding">5sp</dimen>
+    <dimen name="item_margin_start">5sp</dimen>
+</resources>

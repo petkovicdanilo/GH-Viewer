@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/repository_search_item_name"
         tools:text="octocat/hello-world"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="@dimen/item_margin_start"
         android:layout_gravity="center"/>
 
 </LinearLayout>

@@ -12,4 +12,6 @@
     <string name="is_private_repo">private</string>
     <string name="current_branch">branch: %1$s</string>
     <string name="clear">Clear</string>
+    <string name="home_page">Home</string>
+    <string name="search_title">Search</string>
 </resources>

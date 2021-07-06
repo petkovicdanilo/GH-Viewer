@@ -53,7 +53,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         Glide.with(fragment)
                 .load(event.getActor().getAvatarUrl())
                 .circleCrop()
-                .fitCenter()
                 .into(profileImage);
     }
 
