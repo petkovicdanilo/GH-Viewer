@@ -29,7 +29,8 @@
                 android:text="@={viewModel.query}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/btn_search"
                 app:layout_constraintEnd_toStartOf="@+id/btn_search"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="10dp"/>
 
             <Button
                 android:id="@+id/btn_search"
@@ -38,7 +39,8 @@
                 android:onClick="@{() -> viewModel.search()}"
                 android:text="@string/search"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="5dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_results"
@@ -50,11 +52,10 @@
                 android:id="@+id/btn_search_load_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:enabled="@{!viewModel.done &amp;&amp; viewModel.searchResults.size() > 0}"
                 android:onClick="@{() -> viewModel.loadNextPage()}"
                 android:text="@string/load_more"
-                app:layout_constraintEnd_toStartOf="@id/btn_search_clear"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_results" />
 
@@ -62,12 +63,20 @@
                 android:id="@+id/btn_search_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/btn_search_load_more"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_results"
-                android:text="@string/clear"
+                android:layout_marginEnd="4dp"
+                android:enabled="@{viewModel.searchResults.size() > 0}"
                 android:onClick="@{() -> viewModel.clear()}"
-                android:enabled="@{viewModel.searchResults.size() > 0}"/>
+                android:text="@string/clear"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/search_results" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
