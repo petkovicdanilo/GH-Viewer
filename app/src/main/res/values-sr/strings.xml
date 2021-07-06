@@ -36,4 +36,5 @@
     <string name="description">опис</string>
     <string name="home_url">почетни урл</string>
     <string name="create">Креирај</string>
+    <string name="reload">Учитај поново</string>
 </resources>

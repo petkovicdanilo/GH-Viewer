@@ -36,4 +36,5 @@
     <string name="description">opis</string>
     <string name="home_url">početni url</string>
     <string name="create">Kreiraj</string>
+    <string name="reload">Učitaj ponovo</string>
 </resources>

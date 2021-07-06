@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 import com.github.petkovicdanilo.ghviewer.api.ApiHelper;
 import com.github.petkovicdanilo.ghviewer.api.GitHubService;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
-import com.github.petkovicdanilo.ghviewer.api.dto.RepositorySearchResultDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +17,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyRepositoriesViewModel extends ViewModel {
+public class RepositoriesViewModel extends ViewModel {
 
     @Getter
-    private final MutableLiveData<List<RepositoryDto>> myRepositories =
+    private final MutableLiveData<List<RepositoryDto>> repositories =
             new MutableLiveData<>(new ArrayList<>());
 
     @Getter
@@ -59,9 +58,9 @@ public class MyRepositoriesViewModel extends ViewModel {
                     done.postValue(true);
                 }
 
-                List<RepositoryDto> currentRepositories = myRepositories.getValue();
+                List<RepositoryDto> currentRepositories = repositories.getValue();
                 currentRepositories.addAll(newRepositories);
-                myRepositories.postValue(currentRepositories);
+                repositories.postValue(currentRepositories);
             }
 
             @Override
@@ -69,5 +68,12 @@ public class MyRepositoriesViewModel extends ViewModel {
                 Log.e(TAG, "Failed to load my repositories");
             }
         });
+    }
+
+    public void reload() {
+        done.setValue(false);
+        nextPage = 1;
+        repositories.setValue(new ArrayList<>());
+        loadNextPage();
     }
 }

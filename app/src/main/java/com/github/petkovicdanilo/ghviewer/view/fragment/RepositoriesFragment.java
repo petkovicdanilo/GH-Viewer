@@ -16,13 +16,13 @@ import com.github.petkovicdanilo.ghviewer.R;
 import com.github.petkovicdanilo.ghviewer.api.dto.RepositoryDto;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoriesBinding;
 import com.github.petkovicdanilo.ghviewer.view.adapter.RepositoriesAdapter;
-import com.github.petkovicdanilo.ghviewer.viewmodel.MyRepositoriesViewModel;
+import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoriesViewModel;
 
 public class RepositoriesFragment extends Fragment implements RepositoriesAdapter.OnRepositoryListener {
 
     private static final String TAG = "RepositoriesFragment";
 
-    private MyRepositoriesViewModel viewModel;
+    private RepositoriesViewModel viewModel;
     private RepositoriesAdapter adapter;
 
     private FragmentRepositoriesBinding binding;
@@ -44,11 +44,11 @@ public class RepositoriesFragment extends Fragment implements RepositoriesAdapte
         binding.setLifecycleOwner(getViewLifecycleOwner());
         View view = binding.getRoot();
 
-        viewModel = new ViewModelProvider(requireActivity()).get(MyRepositoriesViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(RepositoriesViewModel.class);
 
         binding.setViewModel(viewModel);
 
-        viewModel.getMyRepositories().observe(getViewLifecycleOwner(),
+        viewModel.getRepositories().observe(getViewLifecycleOwner(),
                 activities -> updateAdapter());
         updateAdapter();
 
@@ -60,7 +60,7 @@ public class RepositoriesFragment extends Fragment implements RepositoriesAdapte
     }
 
     private void updateAdapter() {
-        adapter = new RepositoriesAdapter(viewModel.getMyRepositories().getValue(), getContext(),
+        adapter = new RepositoriesAdapter(viewModel.getRepositories().getValue(), getContext(),
                 this);
         binding.myRepositories.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.myRepositories.setAdapter(adapter);
@@ -68,7 +68,7 @@ public class RepositoriesFragment extends Fragment implements RepositoriesAdapte
 
     @Override
     public void onRepositoryClick(int position) {
-        RepositoryDto clickedRepository = viewModel.getMyRepositories().getValue().get(position);
+        RepositoryDto clickedRepository = viewModel.getRepositories().getValue().get(position);
 
         RepositoriesFragmentDirections.RepositoriesToRepositoryAction action =
                 RepositoriesFragmentDirections.repositoriesToRepositoryAction(clickedRepository.getFullName());
