@@ -5,18 +5,22 @@
     android:layout_height="50dp"
     android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="3dp">
+    android:padding="@dimen/fragment_root_padding"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
         android:id="@+id/tree_icon"
-        android:layout_marginRight="3dp"/>
+        android:layout_marginEnd="3dp"
+        android:layout_gravity="center_vertical"
+        tools:src="@drawable/ic_baseline_folder_24"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:id="@+id/tree_item_name"/>
+        android:id="@+id/tree_item_name"
+        tools:text="README.md"/>
 
 </LinearLayout>
