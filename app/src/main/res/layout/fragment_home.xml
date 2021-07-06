@@ -23,6 +23,7 @@
                 android:id="@+id/events_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:listitem="@layout/event_item"
                 android:padding="10dp" />
 
             <com.google.android.material.button.MaterialButton
