@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GitHub pretraživač</string>
+    <string name="app_name">GH pretraživač</string>
     <string name="logout">Odjavi se</string>
     <string name="create_repo">Kreiraj repozitorijum</string>
     <string name="log_in">Prijavi se</string>

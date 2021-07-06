@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GitHub Viewer</string>
+    <string name="app_name">GH Viewer</string>
     <string name="logout">Log out</string>
     <string name="create_repo">Create repository</string>
     <string name="log_in">Log in</string>
