@@ -1,6 +1,8 @@
 package com.github.petkovicdanilo.ghviewer.view.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         EventDto event = events.get(position);
 
-        holder.getTextView().setText(eventToString(event, holder));
+        String text = eventToString(event, holder);
+        Spanned styledText = Html.fromHtml(text);
+        holder.getTextView().setText(styledText);
 
         ImageView profileImage = holder.getProfileImage();
         Glide.with(fragment)
@@ -97,8 +101,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
     private String eventToString(EventDto event, ViewHolder viewHolder) {
         Context context = viewHolder.itemView.getContext();
-        String repositoryName = event.getRepo().getName();
-        String actorLogin = event.getActor().getLogin();
+        String repositoryName = "<b>" + event.getRepo().getName() + "</b>";
+        String actorLogin = "<b>" + event.getActor().getLogin() + "</b>";
 
         switch (event.getType()) {
             case COMMIT_COMMENT_EVENT:
