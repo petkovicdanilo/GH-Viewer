@@ -25,6 +25,7 @@ import com.github.petkovicdanilo.ghviewer.view.util.BottomNav;
 import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryBlobViewModel;
 import com.github.petkovicdanilo.ghviewer.viewmodel.RepositoryViewModel;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeItemListener {
@@ -79,9 +80,12 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
     private void updateAdapter() {
         if (viewModel.getCurrentTree().getValue() != null) {
             adapter = new TreeAdapter(viewModel.getCurrentTree().getValue().getTree(), this);
-            binding.repositoryTree.setLayoutManager(new LinearLayoutManager(getContext()));
-            binding.repositoryTree.setAdapter(adapter);
         }
+        else {
+            adapter = new TreeAdapter(new ArrayList<>(), this);
+        }
+        binding.repositoryTree.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.repositoryTree.setAdapter(adapter);
     }
 
     @Override
