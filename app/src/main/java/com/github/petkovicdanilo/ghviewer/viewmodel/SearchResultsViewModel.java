@@ -45,7 +45,7 @@ public class SearchResultsViewModel extends ViewModel {
         }
 
         Call<RepositorySearchResultDto> call = gitHubService.searchRepositories(query.getValue(),
-                nextPage, perPage);
+                nextPage, perPage, "stars");
         nextPage++;
         call.enqueue(new Callback<RepositorySearchResultDto>() {
             @Override
