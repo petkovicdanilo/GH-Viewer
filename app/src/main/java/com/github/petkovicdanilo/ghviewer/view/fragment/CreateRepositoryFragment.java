@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.github.petkovicdanilo.ghviewer.R;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentCreateRepositoryBinding;
 import com.github.petkovicdanilo.ghviewer.databinding.FragmentRepositoryBinding;
+import com.github.petkovicdanilo.ghviewer.view.util.BottomNav;
 import com.github.petkovicdanilo.ghviewer.viewmodel.CreateRepositoryViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -49,6 +50,12 @@ public class CreateRepositoryFragment extends Fragment implements CreateReposito
         binding.setViewModel(viewModel);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BottomNav.unselect(requireActivity());
     }
 
     @Override

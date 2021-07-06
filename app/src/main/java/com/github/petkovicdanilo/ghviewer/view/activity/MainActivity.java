@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.create_repo:
-                BottomNav.unselect(this);
                 navController.navigate(R.id.create_repo_action);
                 return true;
             case R.id.logout:

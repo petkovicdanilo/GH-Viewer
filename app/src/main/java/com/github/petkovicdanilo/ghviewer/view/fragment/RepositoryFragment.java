@@ -44,8 +44,6 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        BottomNav.unselect(requireActivity());
-
         requireActivity().getOnBackPressedDispatcher().addCallback(this,
                 new OnBackPressedCallback(true) {
                     @Override
@@ -101,6 +99,12 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
         }
 
         repoBlobViewModel.setReload(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BottomNav.unselect(requireActivity());
     }
 
     @Override
