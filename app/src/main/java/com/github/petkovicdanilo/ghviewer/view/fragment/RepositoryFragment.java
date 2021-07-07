@@ -112,6 +112,12 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        repoBlobViewModel.setReload(false);
+    }
+
+    @Override
     public void onTreeItemClicked(int position) {
         TreeDto.TreeItem treeItemClicked =
                 viewModel.getCurrentTree().getValue().getTree().get(position);
