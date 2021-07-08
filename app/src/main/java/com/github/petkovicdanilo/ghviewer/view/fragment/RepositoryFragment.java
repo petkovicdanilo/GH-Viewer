@@ -3,8 +3,6 @@ package com.github.petkovicdanilo.ghviewer.view.fragment;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -74,35 +72,34 @@ public class RepositoryFragment extends Fragment implements TreeAdapter.OnTreeIt
         viewModel.getCurrentTree().observe(getViewLifecycleOwner(), events -> updateAdapter());
         updateAdapter();
 
-        return view;
-    }
-
-    private void updateAdapter() {
-        if (viewModel.getCurrentTree().getValue() != null) {
-            adapter = new TreeAdapter(viewModel.getCurrentTree().getValue().getTree(), this);
-        }
-        else {
-            adapter = new TreeAdapter(new ArrayList<>(), this);
-        }
-        binding.repositoryTree.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.repositoryTree.setAdapter(adapter);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         RepositoryFragmentArgs args = RepositoryFragmentArgs.fromBundle(getArguments());
 
         String[] ownerAndRepoName = args.getRepositoryName().split("/");
         String owner = ownerAndRepoName[0];
         String repositoryName = ownerAndRepoName[1];
 
-        if (repoBlobViewModel.doReload()) {
+        if (differentRepository(args) || repoBlobViewModel.doReload()) {
             viewModel.loadRepository(owner, repositoryName);
         }
 
         repoBlobViewModel.setReload(true);
+
+        return view;
+    }
+
+    private boolean differentRepository(RepositoryFragmentArgs args) {
+        return viewModel.getRepository().getValue() != null
+            && !viewModel.getRepository().getValue().getFullName().equals(args.getRepositoryName());
+    }
+
+    private void updateAdapter() {
+        if (viewModel.getCurrentTree().getValue() != null) {
+            adapter = new TreeAdapter(viewModel.getCurrentTree().getValue().getTree(), this);
+        } else {
+            adapter = new TreeAdapter(new ArrayList<>(), this);
+        }
+        binding.repositoryTree.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.repositoryTree.setAdapter(adapter);
     }
 
     @Override
